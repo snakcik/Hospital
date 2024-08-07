@@ -1,0 +1,27 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+@model DepartmanDto
+
+<h1>Create New Departman</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+            <input asp-for="Name" class="form-control" placeholder="Departman Giriniz" />
+            <br />
+            <input asp-for="Description" class="form-control" placeholder="Açıklama giriniz" />
+            <br />
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+
+        </div>
+
+
+    </div>
+
+</form>
+

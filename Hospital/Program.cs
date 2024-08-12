@@ -8,9 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //dependency injection icin burada tanimlama yapmaya calistim
 builder.Services.AddScoped<IDepartman,DepartmanService>();
@@ -34,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Departman}/{action=Add}/{id?}");
+    pattern: "{controller=Departman}/{action=List}/{id?}");
 
 app.Run();

@@ -7,12 +7,15 @@ namespace Hospital.Repository
 {
     public interface IBaseRepository<TEntity> 
     {
-        List<DepartmanDto> GetAll();
-        void Add(TEntity entity);
-        void Update(TEntity entity, string Id);
-        void Delete(string Id);
-        IQueryable<TEntity> Serach(Expression<Func<TEntity, bool>> predicate);
-        DepartmanDto GetById(string Id);
+        
+            List<TEntity> GetAll();
+            void Add(TEntity entity);
+            void Update(TEntity entity, string id);
+            void Delete(string id);
+            IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
+            TEntity GetById(string id);
+
+        
 
     }
 }

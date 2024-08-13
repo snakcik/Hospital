@@ -44,7 +44,12 @@ namespace Hospital.Services
             }
         }
     
-        
+        public void Remove (string Id)
+        {
+            var removeed = _db.Set<Departman>().Find(Id);
+            _db.Set<Departman>().Remove(removeed);
+            _db.SaveChanges() ;
+        }
 
         public List<DepartmanDto> GetActive()
         {

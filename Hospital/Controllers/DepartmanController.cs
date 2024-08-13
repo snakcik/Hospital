@@ -65,6 +65,12 @@ namespace Hospital.Controllers
             return RedirectToAction("List");
         }
 
+        public IActionResult Remove(string id)
+        {
+            _departmanService.Remove(id);
+            return RedirectToAction("List");
+        }
+
         //[HttpPost, ActionName("Delete")]
         //public IActionResult DeleteConfirmed(string id)
         //{

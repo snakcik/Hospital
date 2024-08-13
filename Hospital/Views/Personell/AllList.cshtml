@@ -1,0 +1,55 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "AllList";
+}
+@model List<PersonellDto>
+
+<h1>Personell</h1>
+<script>
+    function Delete() { return confirm("Silmek istediğinden emin misin ?") }
+
+</script>
+
+<a asp-controller="Personell" asp-action="Add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col"> Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Identity Number </th>
+            <th scope="col">Departman</th>
+            <th scope="col">Title</th>
+            <th scope="col">Phone</th>
+            <th scope="col">E-Mail</th>
+            <th scope="col">Status</t>
+            <th scope="col">Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Id">
+                <td>@item.Name</td>
+                <td>@item.LastName</td>
+                <td>@item.IdentityNumber</td>
+                <td>@item.Departman</td>
+                <td>@item.Title</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>@item.IsDeleted</td>
+                <td> <a href="Delete/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;<a href="" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> </td>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+

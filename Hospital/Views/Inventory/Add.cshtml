@@ -1,0 +1,28 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+@model InventoryDto
+
+<h1>Add Inventory</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+            <input asp-for="Name" class="form-control" placeholder="Ürün Adı Giriniz" />
+            <br />
+            <input asp-for="Description" class="form-control" placeholder="Açıklama giriniz" />
+            <br />           
+            <input asp-for="Stock" class="form-control" placeholder="Stok giriniz" />
+            <br />
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+
+        </div>
+
+
+    </div>
+
+</form>

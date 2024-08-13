@@ -13,7 +13,11 @@ builder.Services.AddDbContext<Context>(options =>
 
 //dependency injection icin burada tanimlama yapmaya calistim
 builder.Services.AddScoped<IDepartman,DepartmanService>();
-
+builder.Services.AddScoped<IInventory, InventoryService>();
+builder.Services.AddScoped<IPatient, PatientService>();
+builder.Services.AddScoped<IPersonell, PersonellService>();
+builder.Services.AddScoped<IPoliclinic, PoliclinicService>();
+builder.Services.AddScoped<ITitle, TitleService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +37,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Departman}/{action=List}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

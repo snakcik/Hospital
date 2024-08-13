@@ -31,24 +31,44 @@ namespace Hospital.Services
             _db.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Delete( string id)
         {
-            var departman = _db.Set<Departman>().Find(id);
-            if (departman != null)
+
+            var DeletedDepartman = _db.Set<Departman>().Find(id);
+            if (DeletedDepartman != null)
             {
-                _db.Set<Departman>().Remove(departman);
+                DeletedDepartman.DeletedAt =  DateTime.Now;
+                DeletedDepartman.ActivePasive =  false;
+                _db.Set<Departman>().Update(DeletedDepartman);
                 _db.SaveChanges();
             }
+        }
+    
+        
+
+        public List<DepartmanDto> GetActive()
+        {
+           List<DepartmanDto> dActiveList = _db.Set<Departman>().Where(x=>x.ActivePasive == true).Select(x=> new DepartmanDto
+           {
+               Id = x.Id,
+               Name = x.Name,
+               Description= x.Description,
+              
+           }).ToList();
+
+            return dActiveList;
         }
 
         public List<DepartmanDto> GetAll()
         {
+
             return _db.Set<Departman>()
                       .Select(d => new DepartmanDto
                       {
                           Id = d.Id,
                           Name = d.Name,
-                          Description = d.Description
+                          Description = d.Description,
+                          IsDeleted = d.ActivePasive
                       }).ToList();
         }
 

@@ -1,0 +1,30 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+@model PatientDto
+
+<h1>Detail</h1>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+    <h5 class="card-title">Product Detail</h5>
+    <p class="card-text">Hasta Adı : @Model.Name</p>
+        <p class="card-text">Hasta Soyadı : @Model.LastName</p>
+        <p class="card-text">Kimlik No : @Model.IdentityNumber</p>
+        <p class="card-text">Telefon : @Model.Phone</p>
+        <p class="card-text">E-mail : @Model.Email</p>
+        <p class="card-text">Hastalık : @Model.Illness</p>
+        <p class="card-text">Teşhis : @Model.Diagnosis</p>
+        <p class="card-text">Başvurduğu Polikinlik : @Model.Policlinic</p>
+        <p class="card-text">Doktoru : @Model.Personell</p>
+
+       @*  asp-controller ile ilgili controllere asp-action ile ise controller in ilgili action una rout yapıyoruz*@
+    <a asp-controller="Patient" asp-action="List" class="btn btn-primary">List</a>
+  </div>
+
+
+
+

@@ -1,6 +1,8 @@
-﻿namespace Hospital.Repository
+﻿using Hospital.Dtos;
+
+namespace Hospital.Repository
 {
-    public interface IPersonell
+    public interface IPersonell : IBaseRepository<PersonellDto>
     {
     }
 }

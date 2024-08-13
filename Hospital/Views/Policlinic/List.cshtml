@@ -1,0 +1,40 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Policlinic</h1>
+<script>
+    function Delete() { return confirm("Silmek istediğinden emin misin ?") }
+
+</script>
+@model List<PoliclinicDto>
+
+<a asp-controller="Policlinic" asp-action="add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col">Policlinic Name</th>
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Id">
+                <td>@item.Name</td>
+                <td> <a href="Delete/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                     <a href="" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
+                </td>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>

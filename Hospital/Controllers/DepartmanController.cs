@@ -17,8 +17,8 @@ namespace Hospital.Controllers
 
         public IActionResult List()
         {
-            var departmanList = _departmanService.GetAll();
-            return View(departmanList);
+            var result = _departmanService.GetActive();
+            return View(result);
         }
 
         public IActionResult Add()
@@ -31,7 +31,7 @@ namespace Hospital.Controllers
         {
             
                 _departmanService.Add(departmanDto);
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             
             
         }
@@ -60,18 +60,21 @@ namespace Hospital.Controllers
         public IActionResult Delete(string id)
         {
             var departman = _departmanService.GetById(id);
-            if (departman == null)
-            {
-                return NotFound();
-            }
-            return View(departman);
+
+            _departmanService.Delete(id);
+            return RedirectToAction("List");
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(string id)
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeleteConfirmed(string id)
+        //{
+        //    _departmanService.Delete(id);
+        //    return RedirectToAction("Index");
+        //}
+        public IActionResult AllList()
         {
-            _departmanService.Delete(id);
-            return RedirectToAction("Index");
+            var AllList = _departmanService.GetAll();
+            return View(AllList);
         }
 
         public IActionResult Details(string id)

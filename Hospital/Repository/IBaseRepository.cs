@@ -9,9 +9,10 @@ namespace Hospital.Repository
     {
         
             List<TEntity> GetAll();
+            List<TEntity>GetActive();
             void Add(TEntity entity);
             void Update(TEntity entity, string id);
-            void Delete(string id);
+            void Delete( string id);
             IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
             TEntity GetById(string id);
 

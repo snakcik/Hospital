@@ -7,7 +7,8 @@ namespace Hospital.Data.Context
     {
         public Context(DbContextOptions<Context> options)
             : base(options){ }
-
+        public DbSet<AppRole> Roles { get; set; }
+        public DbSet<AppUser> Users { get; set; }
         public DbSet<Departman>Departmens { get; set; }
         public DbSet<Inventory> Inventorys { get; set; }
         public DbSet<Patient> Patients { get; set; }

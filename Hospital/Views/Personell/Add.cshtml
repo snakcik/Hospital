@@ -1,0 +1,35 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "Add";
+}
+@model PersonellDto
+<h1>Personell Add</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+            <input asp-for="Name" class="form-control" placeholder=" Adı" />
+            <br />
+            <input asp-for="LastName" class="form-control" placeholder="Soyadı" />
+            <br />
+            <input asp-for="IdentityNumber" class="form-control" placeholder="TC Kimlik No" />
+            <br />
+            <input asp-for="Phone" class="form-control" placeholder="Telefon No" />
+            <br />
+            <input asp-for="Email" class="form-control" placeholder="E-Posta" />
+            <br />
+            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles"></select>
+            <br />
+            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman"></select>
+            <br />
+
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+
+        </div>
+
+
+    </div>
+
+</form>

@@ -44,6 +44,7 @@ namespace Hospital.Services
         {
             List<TitleDto> tList = _db.Set<Title>().Where(x => x.ActivePasive == true).Select(x => new TitleDto
             {
+                Id = x.Id,
                 Name = x.Name,
                 Description = x.Description,
               
@@ -54,7 +55,9 @@ namespace Hospital.Services
         public List<TitleDto> GetAll()
         {
             List<TitleDto> tList = _db.Set<Title>().Select(x=> new TitleDto 
-            { Name = x.Name, 
+            { 
+              Id = x.Id,
+              Name = x.Name, 
               Description = x.Description,
               IsDeleted = x.ActivePasive
             }).ToList();

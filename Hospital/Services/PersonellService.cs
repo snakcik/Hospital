@@ -102,8 +102,8 @@ namespace Hospital.Services
                     IdentityNumber = PersonnelId.IdentityNumber,
                     Phone = PersonnelId.Phone,
                     Email = PersonnelId.Email,
-                    Title = PersonnelId.Title.Name,
-                    Departman = PersonnelId.Departman.Name,
+                    Title = PersonnelId.TitleId,
+                    Departman = PersonnelId.DepartmanId
                    
                 };
             }

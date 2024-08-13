@@ -44,8 +44,8 @@ namespace Hospital.Controllers
         public IActionResult Add(PatientDto patientDto) 
         {
             _patient.Add(patientDto);
-        
-        return View(patientDto);
+
+            return RedirectToAction("List");
         }
 
         public IActionResult Delete(string id)

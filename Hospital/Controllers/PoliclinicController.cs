@@ -37,7 +37,7 @@ namespace Hospital.Controllers
         public IActionResult Add(PoliclinicDto policlinicDto)
         {
             _policlinic.Add(policlinicDto);
-            return View();
+            return RedirectToAction("List");
         }
 
         public IActionResult Delete(string id)

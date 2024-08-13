@@ -85,9 +85,7 @@ namespace Hospital.Services
 
         public PatientDto GetById(string id)
         {
-            Patient patient = _db.Patients.Include(x => x.PoliclinicId)
-                              .Include(x => x.PersonellId)
-                              .First(x=>x.Id == id);
+            Patient patient = _db.Patients.Find(id);
 
 
             PatientDto? patientDto = _db.Set<Patient>()
@@ -103,8 +101,8 @@ namespace Hospital.Services
                 Email = x.Email,
                 Illness = x.Illness,
                 Diagnosis = x.Diagnosis,
-                Policlinic = x.Policlinic.Name,
-                Personell = x.Personell.Name,
+                Policlinic = x.PoliclinicId,
+                Personell = x.PersonellId
 
             }).FirstOrDefault();
 

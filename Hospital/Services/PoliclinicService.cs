@@ -45,6 +45,7 @@ namespace Hospital.Services
                 .Where(x=>x.ActivePasive == true)
                 .Select(x => new PoliclinicDto
             {
+                Id = x.Id,
                 Name = x.Name,
                
             }).ToList();
@@ -56,6 +57,7 @@ namespace Hospital.Services
         {
             List<PoliclinicDto> pList = _db.Set<Policlinic>().Select(x => new PoliclinicDto
             {
+                Id = x.Id,
                 Name = x.Name,
                 IsDeleted = x.ActivePasive
             }).ToList();

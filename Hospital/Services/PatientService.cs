@@ -18,6 +18,8 @@ namespace Hospital.Services
 
         public void Add(PatientDto entity)
         {
+            
+
             Patient patient = new Patient
             {
                 Name = entity.Name,
@@ -30,9 +32,22 @@ namespace Hospital.Services
                 PoliclinicId = entity.Policlinic,
                 PersonellId = entity.Personell,
             };
-            _db.Add(patient);
-            _db.SaveChanges();
 
+            var checkIdentity = _db.Patients.FirstOrDefault(x=>x.IdentityNumber==patient.IdentityNumber);
+            if (checkIdentity ==null)
+            {
+                _db.Add(patient);
+                _db.SaveChanges();
+            }
+            else
+            {
+                
+            }
+                    
+            
+               
+            
+            
         }
 
         public void Delete(string id)
@@ -109,14 +124,39 @@ namespace Hospital.Services
             return patientDto;
         }
 
+        public void Remove(string Id)
+        {
+            var removeed = _db.Set<Patient>().Find(Id);
+            _db.Set<Patient>().Remove(removeed);
+            _db.SaveChanges();
+        }
+
         public IQueryable<PatientDto> Search(Expression<Func<PatientDto, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(PatientDto entity, string id)
+        public void Update(PatientDto entity, string Id)
         {
-            throw new NotImplementedException();
+            var ExistingPatient = _db.Set<Patient>().Find(Id);
+
+            if (ExistingPatient != null)
+            {
+                
+                ExistingPatient.Name = entity.Name;
+                ExistingPatient.LastName = entity.LastName;
+                ExistingPatient.IdentityNumber = entity.IdentityNumber;
+                ExistingPatient.Illness = entity.Illness;
+                ExistingPatient.Diagnosis = entity.Diagnosis;
+                ExistingPatient.Phone = entity.Phone;
+                ExistingPatient.PoliclinicId = entity.Policlinic;
+                ExistingPatient.PersonellId = entity.Personell;
+                ExistingPatient.UpdatedAt = DateTime.Now;
+
+                _db.Update(ExistingPatient);
+                _db.SaveChanges();
+
+            }
         }
     }
 }

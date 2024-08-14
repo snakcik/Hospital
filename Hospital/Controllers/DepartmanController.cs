@@ -36,7 +36,7 @@ namespace Hospital.Controllers
             
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Update(string id)
         {
             var departman = _departmanService.GetById(id);
             if (departman == null)
@@ -47,12 +47,12 @@ namespace Hospital.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(DepartmanDto departmanDto, string id)
+        public IActionResult Update(DepartmanDto departmanDto, string id)
         {
             if (ModelState.IsValid)
             {
                 _departmanService.Update(departmanDto, id);
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View(departmanDto);
         }

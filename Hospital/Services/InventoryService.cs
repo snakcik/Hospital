@@ -80,6 +80,13 @@ namespace Hospital.Services
             return null;
         }
 
+        public void Remove(string Id)
+        {
+            var removeed = _db.Set<Inventory>().Find(Id);
+            _db.Set<Inventory>().Remove(removeed);
+            _db.SaveChanges();
+        }
+
         public IQueryable<InventoryDto> Search(Expression<Func<InventoryDto, bool>> predicate)
         {
             throw new NotImplementedException();
@@ -87,7 +94,18 @@ namespace Hospital.Services
 
         public void Update(InventoryDto entity, string id)
         {
-            throw new NotImplementedException();
+            var ExistingInventory = _db.Set<Inventory>().Find(id);
+
+            if (ExistingInventory != null)
+            {
+                ExistingInventory.Name = entity.Name;
+                ExistingInventory.Stock = entity.Stock;
+                ExistingInventory.Description = entity.Description;
+                ExistingInventory.UpdatedAt = DateTime.Now;
+                 
+                _db.Update(ExistingInventory);
+                _db.SaveChanges();
+            }
         }
     }
 }

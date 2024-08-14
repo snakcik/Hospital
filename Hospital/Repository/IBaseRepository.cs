@@ -13,6 +13,7 @@ namespace Hospital.Repository
             void Add(TEntity entity);
             void Update(TEntity entity, string id);
             void Delete( string id);
+            void Remove(string Id);
             IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
             TEntity GetById(string id);
 

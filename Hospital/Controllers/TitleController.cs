@@ -40,12 +40,33 @@ namespace Hospital.Controllers
 
             return RedirectToAction("List");
         }
-        
+
+        public IActionResult Update(string Id) 
+        {
+            var result = _titleService.GetById(Id);
+            return View(result);
+        }
+        [HttpPost]
+        public IActionResult Update(TitleDto titleDto,string Id)
+        {
+            if (ModelState.IsValid)
+            {
+                _titleService.Update(titleDto, Id);
+                return RedirectToAction("List");
+            }
+            return View(titleDto);
+        }
+
         public IActionResult Delete(string id)
         {
             var title = _titleService.GetById(id);
 
             _titleService.Delete(id);
+            return RedirectToAction("List");
+        }
+        public IActionResult Remove(string id)
+        {
+            _titleService.Remove(id);
             return RedirectToAction("List");
         }
 

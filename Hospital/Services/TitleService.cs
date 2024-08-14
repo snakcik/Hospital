@@ -79,14 +79,27 @@ namespace Hospital.Services
             return null;
         }
 
+        public void Remove(string Id)
+        {
+            var removeed = _db.Set<Title>().Find(Id);
+            _db.Set<Title>().Remove(removeed);
+            _db.SaveChanges();
+        }
+
         public IQueryable<TitleDto> Search(Expression<Func<TitleDto, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(TitleDto entity, string id)
+        public void Update(TitleDto entity, string Id)
         {
-            throw new NotImplementedException();
+            var ExisstingTitle = _db.Set<Title>().Find(Id);
+            ExisstingTitle.Name = entity.Name;
+            ExisstingTitle.Description = entity.Description;
+            ExisstingTitle.UpdatedAt = DateTime.Now;
+            _db.Update(ExisstingTitle);
+            _db.SaveChanges();
+
         }
     }
 }

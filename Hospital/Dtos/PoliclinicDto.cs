@@ -6,8 +6,6 @@ namespace Hospital.Dtos
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string PatientId { get; set; }
-        public Patient Patient { get; set; }
         public bool? IsDeleted { get; set; }
     }
 }

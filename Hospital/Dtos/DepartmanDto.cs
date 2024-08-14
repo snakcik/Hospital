@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public bool ? IsDeleted { get; set; }
         public DateTime? DeletedTime { get; set; }
+        public DateTime? UpdatedTime { get; set; }
     }
 }

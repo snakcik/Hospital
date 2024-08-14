@@ -1,0 +1,25 @@
+﻿@using Hospital.Dtos
+@{
+    ViewData["Title"] = "Update";
+}
+
+@model DepartmanDto
+
+<h1>Update</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+            <input asp-for="Name" class="form-control" value="@Model.Name" />
+            <br />
+            <input asp-for="Description" class="form-control" value="@Model.Description" />
+            <br />
+            <input type="submit" value="Kaydet" class="btn btn-primary" />
+
+        </div>
+
+
+    </div>
+
+</form>

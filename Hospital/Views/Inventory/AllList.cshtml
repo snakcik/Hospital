@@ -9,7 +9,7 @@
 
 <h1>Inventory</h1>
 <script>
-    function Delete() { return confirm("Silmek istediğinden emin misin ?") }
+    function Delete() { return confirm("Kalıcı Olarak Silmek istediğinden emin misin ?") }
 
 </script>
 
@@ -37,8 +37,8 @@
                 <td>@item.Stock</td>
                 <td>@item.IsDeleted</td>
                 <td>
-                    <a href="Delete/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
-                    <a href="" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
+                    <a href="Remove/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                    <a href="Update/@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
                 </td>
 
             </tr>

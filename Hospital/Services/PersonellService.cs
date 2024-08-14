@@ -110,6 +110,13 @@ namespace Hospital.Services
             return null;
         }
 
+        public void Remove(string Id)
+        {
+            var removeed = _db.Set<Personell>().Find(Id);
+            _db.Set<Personell>().Remove(removeed);
+            _db.SaveChanges();
+        }
+
         public IQueryable<PersonellDto> Search(Expression<Func<PersonellDto, bool>> predicate)
         {
             throw new NotImplementedException();
@@ -117,7 +124,22 @@ namespace Hospital.Services
 
         public void Update(PersonellDto entity, string id)
         {
-            throw new NotImplementedException();
+           var ExistingPersonell = _db.Set<Personell>().Find(id);
+            if ( ExistingPersonell != null)
+            {
+                ExistingPersonell.Name = entity.Name;
+                ExistingPersonell.LastName = entity.LastName;
+                ExistingPersonell.IdentityNumber = entity.IdentityNumber;
+                ExistingPersonell.Phone = entity.Phone;
+                ExistingPersonell.Email = entity.Email;
+                ExistingPersonell.TitleId = entity.Title;
+                ExistingPersonell.DepartmanId = entity.Departman;
+                ExistingPersonell.UpdatedAt = DateTime.Now;
+
+                _db.Update(ExistingPersonell);
+                _db.SaveChanges();
+                
+            }
         }
     }
 }

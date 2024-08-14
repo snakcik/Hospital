@@ -50,11 +50,41 @@ namespace Hospital.Controllers
             return RedirectToAction("List");
         }
 
+        public IActionResult Update (string Id)
+        {
+           var Person = _personnel.GetById(Id);
+            ViewData["Titles"] = new SelectList(_db.Titles, "Id", "Name");
+            ViewData["Departman"] = new SelectList(_db.Departmens, "Id", "Name");
+
+            return View(Person);
+        }
+
+        [HttpPost]
+        public IActionResult Update(PersonellDto personellDto,string Id)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _personnel.Update(personellDto, Id);
+                return RedirectToAction("List");
+            }
+           
+
+            return View();
+        }
+
+
+
         public IActionResult Delete(string id)
         {
             var departman = _personnel.GetById(id);
 
             _personnel.Delete(id);
+            return RedirectToAction("List");
+        }
+        public IActionResult Remove(string id)
+        {
+            _personnel.Remove(id);
             return RedirectToAction("List");
         }
     }

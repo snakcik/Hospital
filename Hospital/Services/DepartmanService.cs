@@ -120,19 +120,12 @@ namespace Hospital.Services
             {
                 departman.Name = entity.Name;
                 departman.Description = entity.Description;
+                departman.UpdatedAt = DateTime.Now;
+                
                 _db.SaveChanges();
             }
         }
 
-        public void Update(Departman entity, string id)
-        {
-            var existingDepartman = _db.Set<Departman>().Find(id);
-            if (existingDepartman != null)
-            {
-                existingDepartman.Name = entity.Name;
-                existingDepartman.Description = entity.Description;
-                _db.SaveChanges();
-            }
-        }
+
     }
 }

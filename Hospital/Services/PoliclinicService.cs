@@ -79,14 +79,29 @@ namespace Hospital.Services
             return null;
         }
 
+        public void Remove(string Id)
+        {
+            var removeed = _db.Set<Policlinic>().Find(Id);
+            _db.Set<Policlinic>().Remove(removeed);
+            _db.SaveChanges();
+        }
+
         public IQueryable<PoliclinicDto> Search(Expression<Func<PoliclinicDto, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(PoliclinicDto entity, string id)
+        public void Update(PoliclinicDto entity, string Id)
         {
-            throw new NotImplementedException();
+            var ExistingPoliclinic = _db.Set<Policlinic>().Find(Id);
+            if (ExistingPoliclinic != null)
+            {
+                ExistingPoliclinic.Name = entity.Name;
+                ExistingPoliclinic.UpdatedAt = DateTime.Now;
+             
+                _db.Update(ExistingPoliclinic);
+                _db.SaveChanges();
+            }
         }
     }
 }

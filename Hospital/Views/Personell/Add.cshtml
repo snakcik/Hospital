@@ -6,7 +6,17 @@
 @model PersonellDto
 <h1>Personell Add</h1>
 
+@if (ViewBag.Personell == false)
+
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+
 <form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="row">
         <div class="col-6">

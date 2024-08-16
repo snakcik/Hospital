@@ -6,10 +6,25 @@
 @model List<DepartmanDto>
 
 <h1>Departman</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+
+}
 <script>
     function Delete() { return confirm("Silmek istediğinden emin misin ?") }
     
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
  </script>
+
 
 <a asp-controller="Departman" asp-action="add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create</a>
 

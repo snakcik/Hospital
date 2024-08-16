@@ -37,6 +37,7 @@ namespace Hospital.Controllers
         {
 
             _inventory.Add(inventoryDto);
+            TempData["Message"] = "Kayıt İşlemi Başarılı";
 
 
             return RedirectToAction("List");
@@ -68,6 +69,7 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 _inventory.Update(inventoryDto, Id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
             

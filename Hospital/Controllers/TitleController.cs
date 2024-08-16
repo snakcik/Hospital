@@ -37,7 +37,7 @@ namespace Hospital.Controllers
         public IActionResult Add(TitleDto titleDto)
         {
             _titleService.Add(titleDto);
-
+            TempData["Message"] = "Kayıt İşlemi Başarılı";
             return RedirectToAction("List");
         }
 
@@ -52,6 +52,7 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 _titleService.Update(titleDto, Id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
             return View(titleDto);

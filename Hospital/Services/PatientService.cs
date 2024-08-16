@@ -3,13 +3,18 @@ using Hospital.Data.Entities;
 using Hospital.Dtos;
 using Hospital.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Linq.Expressions;
 
 namespace Hospital.Services
 {
     public class PatientService : IPatient
     {
+       
+       
+
         private readonly Context _db;
         public PatientService(Context db)
         {
@@ -18,8 +23,7 @@ namespace Hospital.Services
 
         public void Add(PatientDto entity)
         {
-            
-
+                      
             Patient patient = new Patient
             {
                 Name = entity.Name,
@@ -43,11 +47,36 @@ namespace Hospital.Services
             {
                 
             }
-                    
-            
                
-            
-            
+        }
+
+        public bool AddBool(PatientDto entity)
+        {
+           bool duplicate = true;
+
+            Patient patient = new Patient
+            {
+                Name = entity.Name,
+                LastName = entity.LastName,
+                IdentityNumber = entity.IdentityNumber,
+                Phone = entity.Phone,
+                Email = entity.Email,
+                Illness = entity.Illness,
+                Diagnosis = entity.Diagnosis,
+                PoliclinicId = entity.Policlinic,
+                PersonellId = entity.Personell,
+            };
+
+            var checkIdentity = _db.Patients.FirstOrDefault(x=>x.IdentityNumber==patient.IdentityNumber);
+            if (checkIdentity == null)
+            {
+                _db.Add(patient);
+                _db.SaveChanges();
+            }
+            else
+            { duplicate = false; }
+
+            return duplicate;
         }
 
         public void Delete(string id)
@@ -100,28 +129,28 @@ namespace Hospital.Services
 
         public PatientDto GetById(string id)
         {
-            Patient patient = _db.Patients.Find(id);
 
-
-            PatientDto? patientDto = _db.Set<Patient>()
-                .Include(x=>x.Policlinic)
-                .Include(x=>x.Personell)
-                .Select(x => new PatientDto
+            var patientDto = _db.Set<Patient>().Find(id);
+                
+            if (patientDto != null)
             {
-                Id = x.Id,
-                Name = x.Name,
-                LastName = x.LastName,
-                IdentityNumber = x.IdentityNumber,
-                Phone = x.Phone,
-                Email = x.Email,
-                Illness = x.Illness,
-                Diagnosis = x.Diagnosis,
-                Policlinic = x.PoliclinicId,
-                Personell = x.PersonellId
-
-            }).FirstOrDefault();
-
-            return patientDto;
+                return new PatientDto
+                {
+                    Id = patientDto.Id,
+                    Name = patientDto.Name,
+                    LastName = patientDto.LastName,
+                    IdentityNumber = patientDto.IdentityNumber,
+                    Phone = patientDto.Phone,
+                    Email = patientDto.Email,
+                    Illness = patientDto.Illness,
+                    Diagnosis = patientDto.Diagnosis,
+                    Policlinic = patientDto.PoliclinicId,
+                    Personell = patientDto.PersonellId
+                };
+                    
+            }
+               
+            return null;
         }
 
         public void Remove(string Id)
@@ -158,5 +187,41 @@ namespace Hospital.Services
 
             }
         }
+
+        public List<SelectListItem> GetActivePoliclinics()
+        {
+
+            return _db.Policlinics
+             .Where(x => x.ActivePasive == true)
+             .Select(a => new SelectListItem
+             {
+                 Text = a.Name,
+                 Value = a.Id
+             })
+             .ToList();
+
+        }
+
+        public List<SelectListItem> GetActiveAndDoctorPersonell()
+        {
+
+            return _db.Personells
+              .Where(x => x.ActivePasive == true)
+              .Where(x=>x.Title.Name == "Doktor")
+              .Select(a => new SelectListItem
+              {
+                  Text = a.Name,
+                  Value = a.Id
+              })
+              .ToList();
+
+        }
+        
+
+        public List<NewArrayExpression > Expressions { get; set; }
+
+
+
+
     }
 }

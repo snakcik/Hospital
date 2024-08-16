@@ -37,6 +37,7 @@ namespace Hospital.Controllers
         public IActionResult Add(PoliclinicDto policlinicDto)
         {
             _policlinic.Add(policlinicDto);
+            TempData["Message"] = "Kayıt İşlemi Başarılı";
             return RedirectToAction("List");
         }
 
@@ -54,6 +55,7 @@ namespace Hospital.Controllers
             if(ModelState.IsValid)
             {
                 _policlinic.Update(policlinicDto,Id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
 

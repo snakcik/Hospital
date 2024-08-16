@@ -9,25 +9,26 @@
 
 
 <form method="post">
-
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
         <div class="col-6">
+            <div class="col-form-label">Name </div>
             <input asp-for="Name" class="form-control" value="@Model.Name" />
-            <br />
+            <div class="col-form-label"> Last Name </div>
             <input asp-for="LastName" class="form-control" value="@Model.LastName" />
-            <br />
+            <div class="col-form-label">Identity Number </div>
             <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" />
-            <br />
+            <div class="col-form-label">Phone</div>
             <input asp-for="Phone" class="form-control" value="@Model.Phone" />
-            <br />
+            <div class="col-form-label">E-Mail </div>
             <input asp-for="Email" class="form-control" value="@Model.Email" />
-            <br />
+            <div class="col-form-label">Illness </div>
             <input asp-for="Illness" class="form-control" value="@Model.Illness" />
-            <br />
+            <div class="col-form-label">Diagnosis </div>
             <input asp-for="Diagnosis" class="form-control" value="@Model.Diagnosis" />
-            <br />
+            <div class="col-form-label">Policilinic</div>
             <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics"></select>
-            <br />
+            <div class="col-form-label">Personells</div>
             <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells"></select>
             <br />
 

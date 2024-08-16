@@ -30,24 +30,31 @@ namespace Hospital.Controllers
             return View(AllPatient);
 
         }
-
-
         public IActionResult Add()
         {
-            ViewData["Personells"] = new SelectList(_db.Personells, "Id", "Name");
-            ViewData["Policlinics"] = new SelectList(_db.Policlinics, "Id", "Name");
-
+            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+            ViewBag.Policlinics = _patient.GetActivePoliclinics(); 
+           
             return View();
         }
-
         [HttpPost]
         public IActionResult Add(PatientDto patientDto) 
         {
-            _patient.Add(patientDto);
+            //_patient.Add(patientDto);
+           bool isDuplicate = _patient.AddBool(patientDto);
+            TempData["Message"] = "Kayıt İşlemi Başarılı";
+            if (isDuplicate==false)
+            {
+                ViewBag.Patient = false;
+                ViewBag.Message = "This Identity Number already used";
 
+                return View("Add");
+            }
+            
             return RedirectToAction("List");
-        }
 
+
+        }
         public IActionResult Update(string Id)
         {
             var UpdatedPatient = _patient.GetById(Id);
@@ -58,19 +65,18 @@ namespace Hospital.Controllers
 
             return View(UpdatedPatient);
         }
-
         [HttpPost]
         public IActionResult Update(PatientDto patientDto  ,string Id)
         {
             if (ModelState.IsValid)
             {
                 _patient.Update(patientDto, Id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
 
             return View();
         }
-
         public IActionResult Delete(string id)
         {
             var departman = _patient.GetById(id);

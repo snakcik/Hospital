@@ -46,13 +46,20 @@ namespace Hospital.Controllers
         [HttpPost]  
         public IActionResult Add(PersonellDto personellDto)
         {
-            _personnel.Add(personellDto);
+
+           bool result = _personnel.AddBool(personellDto);
+            TempData["Message"] = "Kayıt İşlemi Başarılı";
+            if (result == false)
+            {
+                ViewBag.Personell = false;
+                ViewBag.Message = "This Identity Number already used";
+            }
             return RedirectToAction("List");
         }
 
         public IActionResult Update (string Id)
         {
-           var Person = _personnel.GetById(Id);
+            var Person = _personnel.GetById(Id);
             ViewData["Titles"] = new SelectList(_db.Titles, "Id", "Name");
             ViewData["Departman"] = new SelectList(_db.Departmens, "Id", "Name");
 
@@ -66,6 +73,7 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 _personnel.Update(personellDto, Id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
            

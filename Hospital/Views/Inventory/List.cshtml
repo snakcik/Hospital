@@ -7,6 +7,14 @@
 @model List<InventoryDto>
 
 <h1>Inventory</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+
+}
 <script>
     function Delete() { return confirm("Silmek istediğinden emin misin ?") }
 

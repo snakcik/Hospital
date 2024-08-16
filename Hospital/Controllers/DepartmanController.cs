@@ -31,7 +31,8 @@ namespace Hospital.Controllers
         {
             
                 _departmanService.Add(departmanDto);
-                return RedirectToAction("List");
+                TempData["Message"] = "Kayıt İşlemi Başarılı";
+            return RedirectToAction("List");
             
             
         }
@@ -43,6 +44,7 @@ namespace Hospital.Controllers
             {
                 return NotFound();
             }
+
             return View(departman);
         }
 
@@ -52,6 +54,7 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 _departmanService.Update(departmanDto, id);
+                TempData["Message"] = "Güncelleme İşlemi Başarılı";
                 return RedirectToAction("List");
             }
             return View(departmanDto);

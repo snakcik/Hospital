@@ -34,6 +34,30 @@ namespace Hospital.Services
 
             
         }
+        public bool AddBool(PersonellDto entity)
+        {
+            bool duplicate = true;
+            Personell personell = new Personell
+            {
+                Name = entity.Name,
+                LastName = entity.LastName,
+                IdentityNumber = entity.IdentityNumber,
+                Phone = entity.Phone,
+                Email = entity.Email,
+                TitleId = entity.Title,
+                DepartmanId = entity.Departman,
+
+            };
+            var isDublicated = _db.Set<Personell>().FirstOrDefault(x => x.Id == personell.Id);
+            if(isDublicated == null)
+            {
+                _db.Set<Personell>().Add(personell);
+                _db.SaveChanges();
+            }
+            else { duplicate = false; }
+                 
+            return duplicate;
+        }
 
         public void Delete(string id)
         {

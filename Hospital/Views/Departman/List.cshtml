@@ -13,16 +13,16 @@
     </div>
 
 }
+@if (TempData["Attached"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Attached"]
+    </div>
+
+}
 <script>
     function Delete() { return confirm("Silmek istediğinden emin misin ?") }
     
-    $(document).ready(function () {
-        setTimeout(function () {
-            $(".alert").fadeOut("slow", function () {
-                $(this).remove();
-            });
-        }, 2000);
-    });
  </script>
 
 
@@ -56,3 +56,13 @@
 
     </tbody>
 </table>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>

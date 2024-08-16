@@ -126,6 +126,16 @@ namespace Hospital.Services
             }
         }
 
+        public bool IsItAttached(string Id)
+        {
+            bool ItIs = true;
+            bool result = _db.Personells.Any(x => x.DepartmanId == Id);
+            if (result !=  false)
+            {
+                return ItIs;
 
+            }
+            return ItIs=false;
+        }
     }
 }

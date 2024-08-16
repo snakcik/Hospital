@@ -62,24 +62,30 @@ namespace Hospital.Controllers
 
         public IActionResult Delete(string id)
         {
+            bool result = _departmanService.IsItAttached(id);
             var departman = _departmanService.GetById(id);
-
-            _departmanService.Delete(id);
+            if (result!=true)
+            {
+                _departmanService.Delete(id);
+                return RedirectToAction("List");
+            }
+            TempData["Attached"] = "Departmana Ekli Bir Personel Var";
             return RedirectToAction("List");
+
         }
 
         public IActionResult Remove(string id)
         {
-            _departmanService.Remove(id);
-            return RedirectToAction("List");
+          bool result =  _departmanService.IsItAttached(id);
+
+            if (result==false)
+            {
+                _departmanService.Remove(id);
+                return RedirectToAction("List");
+            }
+            return View();
         }
 
-        //[HttpPost, ActionName("Delete")]
-        //public IActionResult DeleteConfirmed(string id)
-        //{
-        //    _departmanService.Delete(id);
-        //    return RedirectToAction("Index");
-        //}
         public IActionResult AllList()
         {
             var AllList = _departmanService.GetAll();

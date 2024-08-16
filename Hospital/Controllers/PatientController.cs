@@ -47,7 +47,8 @@ namespace Hospital.Controllers
             {
                 ViewBag.Patient = false;
                 ViewBag.Message = "This Identity Number already used";
-
+                ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+                ViewBag.Policlinics = _patient.GetActivePoliclinics();
                 return View("Add");
             }
             
@@ -58,10 +59,10 @@ namespace Hospital.Controllers
         public IActionResult Update(string Id)
         {
             var UpdatedPatient = _patient.GetById(Id);
-            ViewData["Personells"] = new SelectList(_db.Personells, "Id", "Name");
-            ViewData["Policlinics"] = new SelectList(_db.Policlinics, "Id", "Name");
+            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+            ViewBag.Policlinics = _patient.GetActivePoliclinics();
 
-            
+
 
             return View(UpdatedPatient);
         }
@@ -70,12 +71,23 @@ namespace Hospital.Controllers
         {
             if (ModelState.IsValid)
             {
-                _patient.Update(patientDto, Id);
-                TempData["Message"] = "Güncelleme İşlemi Başarılı";
-                return RedirectToAction("List");
+                
+               bool result =  _patient.UpdateBool(patientDto, Id);
+                if (result == true)
+                {
+                    TempData["Message"] = "Güncelleme İşlemi Başarılı";
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    ViewBag.Personell = false;
+                    ViewBag.Message = "This Identity Number alrady Used";
+                }
+                
             }
-
-            return View();
+            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+            ViewBag.Policlinics = _patient.GetActivePoliclinics();
+            return View(patientDto);
         }
         public IActionResult Delete(string id)
         {

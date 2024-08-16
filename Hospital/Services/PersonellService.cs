@@ -2,6 +2,7 @@
 using Hospital.Data.Entities;
 using Hospital.Dtos;
 using Hospital.Repository;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -48,7 +49,7 @@ namespace Hospital.Services
                 DepartmanId = entity.Departman,
 
             };
-            var isDublicated = _db.Set<Personell>().FirstOrDefault(x => x.Id == personell.Id);
+            var isDublicated = _db.Set<Personell>().FirstOrDefault(x => x.IdentityNumber == personell.IdentityNumber);
             if(isDublicated == null)
             {
                 _db.Set<Personell>().Add(personell);
@@ -149,6 +150,8 @@ namespace Hospital.Services
         public void Update(PersonellDto entity, string id)
         {
            var ExistingPersonell = _db.Set<Personell>().Find(id);
+
+
             if ( ExistingPersonell != null)
             {
                 ExistingPersonell.Name = entity.Name;
@@ -160,10 +163,77 @@ namespace Hospital.Services
                 ExistingPersonell.DepartmanId = entity.Departman;
                 ExistingPersonell.UpdatedAt = DateTime.Now;
 
+
                 _db.Update(ExistingPersonell);
                 _db.SaveChanges();
                 
             }
+
+
+        }
+
+        public bool UpdateBool(PersonellDto entity, string id)
+        {
+            bool duplicate = true;
+            var ExistingPersonells = _db.Set<Personell>().Find(id);
+            var isDublicated = _db.Set<Personell>().Where(x => x.IdentityNumber != ExistingPersonells.IdentityNumber).ToList();
+            var filteredList = isDublicated.Any(x => x.IdentityNumber == entity.IdentityNumber);
+            if (filteredList != false)
+            {
+                duplicate = false;
+            }
+            else
+            {
+                var ExistingPersonell = _db.Set<Personell>().Find(id);
+
+                if (ExistingPersonell != null)
+                {
+                    ExistingPersonell.Name = entity.Name;
+                    ExistingPersonell.LastName = entity.LastName;
+                    ExistingPersonell.IdentityNumber = entity.IdentityNumber;
+                    ExistingPersonell.Phone = entity.Phone;
+                    ExistingPersonell.Email = entity.Email;
+                    ExistingPersonell.TitleId = entity.Title;
+                    ExistingPersonell.DepartmanId = entity.Departman;
+                    ExistingPersonell.UpdatedAt = DateTime.Now;
+
+                    duplicate = true;
+                    _db.Update(ExistingPersonell);
+                    _db.SaveChanges();
+
+                }
+            }
+        
+            return duplicate;
+        }
+
+        public List<SelectListItem> GetActiveTitle()
+        {
+
+            return _db.Titles
+             .Where(x => x.ActivePasive == true)
+             .Select(a => new SelectListItem
+             {
+                 Text = a.Name,
+                 Value = a.Id
+             })
+             .ToList();
+
+        }
+
+        public List<SelectListItem> GetActiveDepartman()
+        {
+
+            return _db.Departmens
+              .Where(x => x.ActivePasive == true)
+              
+              .Select(a => new SelectListItem
+              {
+                  Text = a.Name,
+                  Value = a.Id
+              })
+              .ToList();
+
         }
     }
 }

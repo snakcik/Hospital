@@ -38,8 +38,9 @@ namespace Hospital.Controllers
 
         public IActionResult Add() 
         {
-            ViewData["Titles"] = new SelectList(_db.Titles, "Id", "Name");
-            ViewData["Departman"] = new SelectList(_db.Departmens, "Id", "Name");
+            ViewBag.Titles = _personnel.GetActiveTitle();
+            ViewBag.Departman = _personnel.GetActiveDepartman();
+
             return View();
         }
 
@@ -48,13 +49,24 @@ namespace Hospital.Controllers
         {
 
            bool result = _personnel.AddBool(personellDto);
-            TempData["Message"] = "Kayıt İşlemi Başarılı";
-            if (result == false)
+            
+            if (result != false)
+            {
+                TempData["Message"] = "Kayıt İşlemi Başarılı";
+                return RedirectToAction("List");
+               
+            }
+            else
             {
                 ViewBag.Personell = false;
                 ViewBag.Message = "This Identity Number already used";
             }
-            return RedirectToAction("List");
+
+            ViewBag.Titles = _personnel.GetActiveTitle();
+            ViewBag.Departman = _personnel.GetActiveDepartman();
+            return View(personellDto);
+
+
         }
 
         public IActionResult Update (string Id)
@@ -72,16 +84,22 @@ namespace Hospital.Controllers
 
             if (ModelState.IsValid)
             {
-                _personnel.Update(personellDto, Id);
-                TempData["Message"] = "Güncelleme İşlemi Başarılı";
-                return RedirectToAction("List");
+               bool result = _personnel.UpdateBool(personellDto, Id);
+                if (result != false)
+                {
+                    TempData["Message"] = "Güncelleme İşlemi Başarılı";
+                    return RedirectToAction("List");
+                                        
+                }
+                ViewBag.Personell = false;
+                ViewBag.Message = "This Identity Number alrady Used";
+                
+                 
             }
-           
-
-            return View();
+            ViewBag.Titles = _personnel.GetActiveTitle();
+            ViewBag.Departman = _personnel.GetActiveDepartman();
+            return View(personellDto);
         }
-
-
 
         public IActionResult Delete(string id)
         {

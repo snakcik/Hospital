@@ -187,6 +187,41 @@ namespace Hospital.Services
 
             }
         }
+        public bool UpdateBool(PatientDto entity, string Id)
+        {
+            bool duplicate = true;
+            var ExistingPatientId = _db.Set<Patient>().Find(Id);
+            var isDublicated = _db.Set<Patient>().Where(x => x.IdentityNumber != ExistingPatientId.IdentityNumber).ToList();
+            var filteredList = isDublicated.Any(x => x.IdentityNumber == entity.IdentityNumber);
+            if (filteredList != false)
+            {
+                duplicate = false;
+            }
+
+            else
+            {
+                var ExistingPatient = _db.Set<Patient>().Find(Id);
+
+                if (ExistingPatient != null)
+                {
+
+                    ExistingPatient.Name = entity.Name;
+                    ExistingPatient.LastName = entity.LastName;
+                    ExistingPatient.IdentityNumber = entity.IdentityNumber;
+                    ExistingPatient.Illness = entity.Illness;
+                    ExistingPatient.Diagnosis = entity.Diagnosis;
+                    ExistingPatient.Phone = entity.Phone;
+                    ExistingPatient.PoliclinicId = entity.Policlinic;
+                    ExistingPatient.PersonellId = entity.Personell;
+                    ExistingPatient.UpdatedAt = DateTime.Now;
+
+                    _db.Update(ExistingPatient);
+                    _db.SaveChanges();
+                }
+                
+            }
+            return duplicate;
+        }
 
         public List<SelectListItem> GetActivePoliclinics()
         {

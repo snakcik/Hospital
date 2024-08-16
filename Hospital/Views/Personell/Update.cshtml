@@ -8,6 +8,12 @@
 
 @model PersonellDto
 
+@if (ViewBag.Personell == false)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
 
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -44,3 +50,14 @@
     </div>
 
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>

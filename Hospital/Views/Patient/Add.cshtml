@@ -11,13 +11,10 @@
  @if(ViewBag.Patient==false)
    
     {
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-danger" role="alert">
         @ViewBag.Message
     </div>
     } 
-
-
-    
 
 <div id="alertMessage" class="alert alert-success" role="alert" style="display:none;">
     @ViewBag.Message
@@ -55,4 +52,13 @@
     </div>
 
 </form>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>

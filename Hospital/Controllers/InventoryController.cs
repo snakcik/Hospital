@@ -1,8 +1,10 @@
 ﻿using Hospital.Data.Entities;
+using Hospital.Data.Enums;
 using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
+using static Hospital.Data.Enums.EnumMessage;
 
 namespace Hospital.Controllers
 {
@@ -35,19 +37,32 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Add(InventoryDto inventoryDto)
         {
+            bool Validation = _inventory.Validation(inventoryDto);
+            if (Validation == true)
+            {
+                _inventory.Add(inventoryDto);
+                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Success);
+                return RedirectToAction("List");
+            }
+            else
+            {
+                ViewBag.Validation = false;
+                ViewBag.ValidationMessage = EnumMessage.GetMessageEn(ValidationStatus.All);
+            }
 
-            _inventory.Add(inventoryDto);
-            TempData["Message"] = "Kayıt İşlemi Başarılı";
-
-
-            return RedirectToAction("List");
+            return View();
+            
         }
 
         public IActionResult Delete(string id)
         {
             var departman = _inventory.GetById(id);
-
+            string name = departman.Name;
+            ViewBag.sure = EnumMessage.GetMessageEn(ValidationStatus.AreYouSure);       
+            TempData["Delete"] = EnumMessage.GetMessageEn(ValidationStatus.Delete);
             _inventory.Delete(id);
+            
+
             return RedirectToAction("List");
         }
         public IActionResult Remove(string id)
@@ -69,7 +84,7 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 _inventory.Update(inventoryDto, Id);
-                TempData["Message"] = "Güncelleme İşlemi Başarılı";
+                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Update);
                 return RedirectToAction("List");
             }
             

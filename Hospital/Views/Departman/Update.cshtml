@@ -11,9 +11,9 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" value="@Model.Name" />
+            <input asp-for="Name" class="form-control" value="@Model.Name" required />
             <br />
-            <input asp-for="Description" class="form-control" value="@Model.Description" />
+            <input asp-for="Description" class="form-control" value="@Model.Description" required />
             <br />
             <input type="submit" value="Kaydet" class="btn btn-primary" />
 

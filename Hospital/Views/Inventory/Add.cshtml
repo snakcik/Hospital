@@ -7,16 +7,22 @@
 @model InventoryDto
 
 <h1>Add Inventory</h1>
+@if (ViewBag.Validation == false)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ValidationMessage
+    </div>
+}
 
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" placeholder="Ürün Adı Giriniz" />
+            <input asp-for="Name" class="form-control" placeholder="Ürün Adı Giriniz" required/>
             <br />
-            <input asp-for="Description" class="form-control" placeholder="Açıklama giriniz" />
+            <input asp-for="Description" class="form-control" placeholder="Açıklama giriniz" required />
             <br />           
-            <input asp-for="Stock" class="form-control" placeholder="Stok giriniz" />
+            <input asp-for="Stock" class="form-control" placeholder="Stok giriniz" required />
             <br />
             <input type="submit" value="Kaydet" class="btn btn-primary" />
 
@@ -26,3 +32,14 @@
     </div>
 
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>

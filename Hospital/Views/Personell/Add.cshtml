@@ -13,6 +13,12 @@
         @ViewBag.Message
     </div>
 }
+@if (ViewBag.Validation != null)
+{
+    <div id="alertMessage" class="alert alert-danger" role="alert">
+        @ViewBag.Validation
+    </div>
+}
 
 
 <form method="post">
@@ -20,19 +26,19 @@
 
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" placeholder=" Adı" />
+            <input asp-for="Name" class="form-control" placeholder=" Adı" required />
             <br />
-            <input asp-for="LastName" class="form-control" placeholder="Soyadı" />
+            <input asp-for="LastName" class="form-control" placeholder="Soyadı" required />
             <br />
-            <input asp-for="IdentityNumber" class="form-control" placeholder="TC Kimlik No" />
+            <input asp-for="IdentityNumber" class="form-control" placeholder="TC Kimlik No" required />
             <br />
-            <input asp-for="Phone" class="form-control" placeholder="Telefon No" />
+            <input asp-for="Phone" class="form-control" placeholder="Telefon No" required />
             <br />
-            <input asp-for="Email" class="form-control" placeholder="E-Posta" />
+            <input asp-for="Email" class="form-control" placeholder="E-Posta" required />
             <br />
-            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles"></select>
+            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles" required></select>
             <br />
-            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman"></select>
+            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman" required></select>
             <br />
 
             <input type="submit" value="Kaydet" class="btn btn-primary" />

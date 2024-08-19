@@ -1,10 +1,12 @@
 ﻿using Hospital.Data.Context;
 using Hospital.Data.Entities;
+using Hospital.Data.Enums;
 using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static Hospital.Data.Enums.EnumMessage;
 
 namespace Hospital.Controllers
 {
@@ -47,24 +49,37 @@ namespace Hospital.Controllers
         [HttpPost]  
         public IActionResult Add(PersonellDto personellDto)
         {
+           bool validation = _personnel.Validation(personellDto);
+             if(validation =true)
+                {
+                bool result = _personnel.AddBool(personellDto);
 
-           bool result = _personnel.AddBool(personellDto);
-            
-            if (result != false)
-            {
-                TempData["Message"] = "Kayıt İşlemi Başarılı";
-                return RedirectToAction("List");
-               
-            }
+                if (result != false)
+                {
+                    TempData["Message"] =GetMessageEn(ValidationStatus.Success);
+                    return RedirectToAction("List");
+
+                }
+                else
+                {
+                    ViewBag.Personell = false;
+                    ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
+                }
+
+                ViewBag.Titles = _personnel.GetActiveTitle();
+                ViewBag.Departman = _personnel.GetActiveDepartman();
+                return View(personellDto);
+              }
+
             else
             {
-                ViewBag.Personell = false;
-                ViewBag.Message = "This Identity Number already used";
+                ViewBag.Validation = GetMessageEn(ValidationStatus.All);
+                ViewBag.Titles = _personnel.GetActiveTitle();
+                ViewBag.Departman = _personnel.GetActiveDepartman();
             }
-
-            ViewBag.Titles = _personnel.GetActiveTitle();
-            ViewBag.Departman = _personnel.GetActiveDepartman();
-            return View(personellDto);
+            
+             return View();
+           
 
 
         }
@@ -87,14 +102,14 @@ namespace Hospital.Controllers
                bool result = _personnel.UpdateBool(personellDto, Id);
                 if (result != false)
                 {
-                    TempData["Message"] = "Güncelleme İşlemi Başarılı";
+                    TempData["Message"] = GetMessageEn(ValidationStatus.Update);
                     return RedirectToAction("List");
                                         
                 }
                 ViewBag.Personell = false;
-                ViewBag.Message = "This Identity Number alrady Used";
-                
-                 
+                ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
+
+
             }
             ViewBag.Titles = _personnel.GetActiveTitle();
             ViewBag.Departman = _personnel.GetActiveDepartman();

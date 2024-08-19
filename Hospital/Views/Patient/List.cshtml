@@ -16,7 +16,12 @@
 
 @model List<PatientDto>
 <script>
-    function Delete() { return confirm("Silmek istediğinden emin misin ?") }
+    function Delete() {
+        var button = event.target.closest('a');
+        var deleteMessage = button.getAttribute('id') + " Are you sure you want to delete this item ?";
+        
+        return confirm(deleteMessage)
+    }
 
 </script>
 
@@ -46,7 +51,8 @@
                 <td>@item.Phone</td>
                 <td>@item.Email</td>
 
-                <td> <a href="Delete/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                <td>
+                    <a href="Delete/@item.Id" onclick="return Delete();" id="@item.Name" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
                      <a href="Update/@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
                 </td>
 

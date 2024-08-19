@@ -3,18 +3,30 @@
 @{
     ViewData["Title"] = "Add";
 }
-
+@if(ViewBag.All != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.All
+    </div>
+}
 @model DepartmanDto
 
 <h1>Create New Departman</h1>
 
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+@if (ViewBag.Validation == false)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ValidationMessage
+    </div>
+}
+
+<form method="post" id="myForm">
+    
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" placeholder="Departman Giriniz" />
-            <br />
-            <input asp-for="Description" class="form-control" placeholder="Açıklama giriniz" />
+            <input asp-for="Name" id="name" name="name" class="form-control" placeholder="Enter Department  " required />
+           <br />
+            <input asp-for="Description" class="form-control" placeholder="Enter Description" required  />
             <br />
             <input type="submit" value="Kaydet" class="btn btn-primary" />
 
@@ -24,4 +36,13 @@
     </div>
 
 </form>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>

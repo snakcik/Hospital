@@ -1,8 +1,12 @@
-﻿using Hospital.Dtos;
+﻿using Hospital.Data;
+using Hospital.Data.Enums;
+using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using static Hospital.Data.Enums.EnumMessage;
 
 namespace Hospital.Controllers
 {
@@ -29,11 +33,16 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Add(DepartmanDto departmanDto)
         {
-            
+            bool validation = _departmanService.Validation(departmanDto);
+            if (validation == true)
+            {
                 _departmanService.Add(departmanDto);
-                TempData["Message"] = "Kayıt İşlemi Başarılı";
-            return RedirectToAction("List");
-            
+                TempData["Success"] = EnumMessage.GetMessageEn(ValidationStatus.Success);
+                return RedirectToAction("List");
+            }
+            else
+                ViewBag.All = EnumMessage.GetMessageEn(ValidationStatus.All);
+            return View();
             
         }
 
@@ -51,12 +60,20 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Update(DepartmanDto departmanDto, string id)
         {
-            if (ModelState.IsValid)
+            bool validation = _departmanService.Validation(departmanDto);
+            
+            if (validation == true)
+            {
+                if (ModelState.IsValid)
             {
                 _departmanService.Update(departmanDto, id);
-                TempData["Message"] = "Güncelleme İşlemi Başarılı";
-                return RedirectToAction("List");
+                TempData["Update"] = EnumMessage.GetMessageEn(ValidationStatus.Update);
+                    return RedirectToAction("List");
             }
+            }
+            else
+                ViewBag.All = EnumMessage.GetMessageEn(ValidationStatus.All);
+            
             return View(departmanDto);
         }
 

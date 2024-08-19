@@ -107,5 +107,16 @@ namespace Hospital.Services
                 _db.SaveChanges();
             }
         }
+
+        public bool Validation(InventoryDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null || entity.Description == null || entity.Stock <= 0 )
+            {
+                Validation = false;
+            }
+
+            return Validation;
+        }
     }
 }

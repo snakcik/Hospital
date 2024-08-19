@@ -251,7 +251,26 @@ namespace Hospital.Services
               .ToList();
 
         }
-        
+
+        public bool Validation(PatientDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null 
+                || entity.LastName == null 
+                || entity.IdentityNumber <=0
+                || entity.Phone == null
+                || entity.Email == null
+                || entity.Illness == null
+                || entity.Diagnosis == null
+                || entity.Policlinic == null
+                || entity.Personell == null
+               )
+            {
+                Validation = false;
+            }
+
+            return Validation;
+        }
 
         public List<NewArrayExpression > Expressions { get; set; }
 

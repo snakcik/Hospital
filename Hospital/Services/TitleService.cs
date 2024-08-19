@@ -101,5 +101,16 @@ namespace Hospital.Services
             _db.SaveChanges();
 
         }
+
+        public bool Validation(TitleDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null || entity.Description == null)
+            {
+                Validation = false;
+            }
+
+            return Validation;
+        }
     }
 }

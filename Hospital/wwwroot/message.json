@@ -1,0 +1,32 @@
+﻿namespace Hospital.wwwroot
+{
+  public class
+  message {
+    {
+      "ValidationMessagesEn": {
+        "All": "Columns cannot be left empty",
+        "Name": "Name field cannot be left empty",
+        "LastName": "Last Name field cannot be left empty",
+        "IdentityNumber": "Identity Number field cannot be left empty",
+        "Phone": "Phone field cannot be left empty",
+        "Email": "Email field cannot be left empty",
+        "Description": "Description field cannot be left empty",
+        "Stock": "Stock field cannot be left empty",
+        "Illness": "Illness field cannot be left empty",
+        "Diagnosis": "Diagnosis field cannot be left empty",
+        "Policlinic": "Policlinic field cannot be left empty",
+        "Personell": "Personell field cannot be left empty",
+        "Title": "Title field cannot be left empty",
+        "Departman": "Departman field cannot be left empty",
+        "Success": "Registration successful",
+        "Update": "Update operation successful",
+        "Invalid": "You have entered an invalid value.",
+        "Delete": "Record Is Deleted",
+        "AreYouSure": "Are you sure you want to delete?",
+        "Dublicate": "This Identity Number already used",
+        "Unknown": "Unknown status"
+      }
+    }
+
+  }
+}

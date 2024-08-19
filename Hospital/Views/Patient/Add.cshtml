@@ -15,33 +15,36 @@
         @ViewBag.Message
     </div>
     } 
+@if (ViewBag.Validation != null)
+{
+    <div id="alertMessage" class="alert alert-danger" role="alert" >
+        @ViewBag.Validation
+    </div>
+}
 
-<div id="alertMessage" class="alert alert-success" role="alert" style="display:none;">
-    @ViewBag.Message
-</div>
+
 
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-
+    
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" placeholder=" Adı" />
+            <input asp-for="Name" class="form-control" placeholder=" Name" required />
             <br />
-            <input asp-for="LastName" class="form-control" placeholder="Soyadı" />
+            <input asp-for="LastName" class="form-control" placeholder="Last Name" required />
             <br />
-            <input asp-for="IdentityNumber" class="form-control" placeholder="TC Kimlik No" />
+            <input asp-for="IdentityNumber" class="form-control" placeholder="Identity Number" required />
             <br />
-            <input asp-for="Phone" class="form-control" placeholder="Telefon No" />
+            <input asp-for="Phone" class="form-control" placeholder="Phone Number" required />
             <br />
-            <input asp-for="Email" class="form-control" placeholder="E-Posta" />
+            <input asp-for="Email" class="form-control" placeholder="Email" />
             <br />
-            <input asp-for="Illness" class="form-control" placeholder="Hastalık Adı" />
+            <input asp-for="Illness" class="form-control" placeholder="Illness" required />
             <br />
-            <input asp-for="Diagnosis" class="form-control" placeholder="Teşhis" />
+            <input asp-for="Diagnosis" class="form-control" placeholder="Diagnosis" />
             <br />
-            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics"></select>                
+            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required></select>
             <br />
-            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells"></select>
+            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required></select>
             <br />
 
             <input type="submit" value="Kaydet" class="btn btn-primary" />

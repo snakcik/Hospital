@@ -1,9 +1,11 @@
 ﻿using Hospital.Data.Context;
+using Hospital.Data.Enums;
 using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static Hospital.Data.Enums.EnumMessage;
 
 namespace Hospital.Controllers
 {
@@ -40,19 +42,35 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Add(PatientDto patientDto) 
         {
-            //_patient.Add(patientDto);
-           bool isDuplicate = _patient.AddBool(patientDto);
-            TempData["Message"] = "Kayıt İşlemi Başarılı";
-            if (isDuplicate==false)
+           bool validation = _patient.Validation(patientDto);
+            if (validation == true)
             {
-                ViewBag.Patient = false;
-                ViewBag.Message = "This Identity Number already used";
+                bool isDuplicate = _patient.AddBool(patientDto);
+                if (isDuplicate = true)
+                {
+                    TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Success);
+                    return RedirectToAction("List");
+                }
+                
+                if (isDuplicate == false)
+                {
+                    ViewBag.Patient = false;
+                    ViewBag.Message = EnumMessage.GetMessageEn(ValidationStatus.Dublicate);
+                    ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+                    ViewBag.Policlinics = _patient.GetActivePoliclinics();
+                    
+                    return View("Add");
+                }
+
+            }
+            else
+            {
+                ViewBag.Validation = EnumMessage.GetMessageEn(EnumMessage.ValidationStatus.All);
                 ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
                 ViewBag.Policlinics = _patient.GetActivePoliclinics();
-                return View("Add");
             }
-            
-            return RedirectToAction("List");
+            return View();
+
 
 
         }

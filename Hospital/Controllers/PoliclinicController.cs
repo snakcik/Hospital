@@ -1,7 +1,9 @@
-﻿using Hospital.Dtos;
+﻿using Hospital.Data.Enums;
+using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
+using static Hospital.Data.Enums.EnumMessage;
 
 namespace Hospital.Controllers
 {
@@ -36,9 +38,17 @@ namespace Hospital.Controllers
         [HttpPost] 
         public IActionResult Add(PoliclinicDto policlinicDto)
         {
-            _policlinic.Add(policlinicDto);
-            TempData["Message"] = "Kayıt İşlemi Başarılı";
-            return RedirectToAction("List");
+            bool Validation = _policlinic.Validation(policlinicDto);
+            if (Validation == true)
+            {
+                _policlinic.Add(policlinicDto);
+                TempData["Message"] = GetMessageEn(ValidationStatus.Success);
+                return RedirectToAction("List");
+            }
+            else ViewBag.Message = GetMessageEn(ValidationStatus.All);
+            return View();
+
+            
         }
 
         public IActionResult Update (string Id)
@@ -55,7 +65,7 @@ namespace Hospital.Controllers
             if(ModelState.IsValid)
             {
                 _policlinic.Update(policlinicDto,Id);
-                TempData["Message"] = "Güncelleme İşlemi Başarılı";
+                TempData["Message"] = GetMessageEn(ValidationStatus.Update);
                 return RedirectToAction("List");
             }
 

@@ -16,6 +16,7 @@ namespace Hospital.Repository
             void Remove(string Id);
             IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate);
             TEntity GetById(string id);
+            bool Validation(TEntity entity);
 
         
 

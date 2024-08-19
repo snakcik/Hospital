@@ -103,5 +103,16 @@ namespace Hospital.Services
                 _db.SaveChanges();
             }
         }
+
+        public bool Validation(PoliclinicDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null )
+            {
+                Validation = false;
+            }
+
+            return Validation;
+        }
     }
 }

@@ -15,10 +15,30 @@
     </div>
 
 }
-<script>
-    function Delete() { return confirm("Silmek istediğinden emin misin ?") }
+  
+    <script>
+   
+        function Delete() {
+          
+        var button = event.target.closest('a');
+        var deleteMessage = button.getAttribute('id') + " Are you sure you want to delete this item ?";
+        console.log(deleteMessage)
+        return confirm(deleteMessage)
+    }
+    </script>
 
-</script>
+
+
+@if (TempData["Delete"] != null)
+{
+  
+
+    <div class="alert alert-danger" role="alert">
+        @TempData["Delete"]
+    </div>
+
+}
+
 
 <a asp-controller="Inventory" asp-action="add" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create</a>
 
@@ -41,8 +61,8 @@
                 <td>@item.Name</td>
                 <td>@item.Description</td>
                 <td>@item.Stock</td>
-                <td> <a href="Delete/@item.Id" onclick="return Delete();" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
-                     <a href="Update/@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
+                <td> <a href="Delete/@item.Id" onclick="return Delete();" id="@item.Name" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                     <a href="Update/@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                 </td>
 
             </tr>

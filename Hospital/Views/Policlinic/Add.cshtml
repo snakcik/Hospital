@@ -5,15 +5,22 @@
 }
 @model PoliclinicDto
 
+@if(ViewBag.Message != null)
+{
+    <div id="alertMessage" class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
 <h1>Add Policlinic</h1>
 
 <h1>Create New policlinic</h1>
 
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    
     <div class="row">
         <div class="col-6">
-            <input asp-for="Name" class="form-control" placeholder="Departman Giriniz" />
+            <input asp-for="Name" class="form-control" placeholder="Departman Giriniz" required/>
             <br />
           
             <input type="submit" value="Kaydet" class="btn btn-primary" />
@@ -24,5 +31,15 @@
     </div>
 
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".alert").fadeOut("slow", function () {
+                $(this).remove();
+            });
+        }, 2000);
+    });
+</script>
 
 

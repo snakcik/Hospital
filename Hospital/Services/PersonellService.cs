@@ -235,5 +235,23 @@ namespace Hospital.Services
               .ToList();
 
         }
+
+        public bool Validation(PersonellDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null
+                || entity.LastName == null
+                || entity.IdentityNumber <= 0
+                || entity.Phone == null
+                || entity.Email == null
+                || entity.Title == null
+                || entity.Departman == null
+               )
+            {
+                Validation = false;
+            }
+
+            return Validation;
+        }
     }
 }

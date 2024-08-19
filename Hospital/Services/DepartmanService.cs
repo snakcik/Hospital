@@ -2,6 +2,7 @@
 using Hospital.Data.Entities;
 using Hospital.Dtos;
 using Hospital.Repository;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Hospital.Services
 
         public void Add(DepartmanDto departmanDto)
         {
+
             Departman departman = new Departman
             {
                 Name = departmanDto.Name,
@@ -137,5 +139,28 @@ namespace Hospital.Services
             }
             return ItIs=false;
         }
+
+        public bool Validation(DepartmanDto entity)
+        {
+            bool Validation = true;
+            if (entity.Name == null || entity.Description == null)
+            {
+                Validation = false;
+            }
+
+            return Validation;
+             
+        }
+
+        public string strValidation(DepartmanDto entity)
+        {
+            if (string.IsNullOrEmpty(entity.Name) && string.IsNullOrEmpty(entity.Description )) return "All";
+            else if (string.IsNullOrEmpty(entity.Name)) return "Name";
+            else if (string.IsNullOrEmpty(entity.Description)) return "Description";
+            else return "Ok";
+
+        }
+
+     
     }
 }

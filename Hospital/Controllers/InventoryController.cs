@@ -17,15 +17,21 @@ namespace Hospital.Controllers
             _inventory = inventory;
         }
 
-        public IActionResult List()
+        public IActionResult List(string keyvalue)
         {
-            var InventoryList = _inventory.GetActive();
+            if (string.IsNullOrEmpty(keyvalue))
+            {
+                var InventoryList = _inventory.GetActive().OrderBy(x => x.Name).ToList();
+                return View(InventoryList);
+            }
+            
+            var result = _inventory.Search(x => x.IsDeleted == true && x.Name.ToLower().Contains(keyvalue.ToLower())).ToList();
 
-            return View(InventoryList);
+            return View(result);
         }
         public IActionResult AllList()
         {
-            var AllList = _inventory.GetAll();
+            var AllList = _inventory.GetAll().OrderBy(x => x.Name).ToList();
             return View(AllList);
         }
 
@@ -68,6 +74,7 @@ namespace Hospital.Controllers
         public IActionResult Remove(string id)
         {
             _inventory.Remove(id);
+            TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.PermanentMessage);
             return RedirectToAction("List");
         }
 
@@ -81,15 +88,20 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Update(InventoryDto inventoryDto,string Id)
         {
-            if (ModelState.IsValid)
+            bool Validation = _inventory.Validation(inventoryDto);
+            if (Validation ==true)
             {
-                _inventory.Update(inventoryDto, Id);
-                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Update);
-                return RedirectToAction("List");
-            }
-            
+                if (ModelState.IsValid)
+                {
+                    _inventory.Update(inventoryDto, Id);
+                    TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Update);
 
-            return View();
+                    return RedirectToAction("List");
+                }
+            }
+            else { TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.All); }
+            
+            return View(inventoryDto);
         }
     }
 }

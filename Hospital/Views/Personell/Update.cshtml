@@ -14,35 +14,41 @@
         @ViewBag.Message
     </div>
 }
-
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    
 
     <div class="row">
         <div class="col-6">
             <div class="col-form-label" >Name</div>
-            <input asp-for="Name" class="form-control" value="@Model.Name"/>
+            <input asp-for="Name" class="form-control" value="@Model.Name"required/>
             
             <div class="col-form-label">Last Name</div>
-            <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+            <input asp-for="LastName" class="form-control" value="@Model.LastName" required />
             
             <div class="col-form-label">Identity Number </div>
-            <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" />
+            <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" required />
             
             <div class="col-form-label">Phone </div>
-            <input asp-for="Phone" class="form-control" value="@Model.Phone" />
+            <input asp-for="Phone" class="form-control" value="@Model.Phone" required />
             
             <div class="col-form-label">E Mail </div>
-            <input asp-for="Email" class="form-control" value="@Model.Email" />
+            <input asp-for="Email" class="form-control" value="@Model.Email" required />
             
             <div class="col-form-label">Title </div>
-            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles"></select>
+            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles" required></select>
             
             <div class="col-form-label">Departman </div>
-            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman"></select>
+            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman" required></select>
             <br />
 
-            <input type="submit" value="Kaydet" class="btn btn-primary" />
+            <button type="submit" value="Save" class="btn btn-primary" />
+            <i class="fa-regular fa-floppy-disk"> </i> Save </button>
 
         </div>
 

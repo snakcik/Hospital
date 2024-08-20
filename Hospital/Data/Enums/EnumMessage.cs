@@ -26,6 +26,9 @@ namespace Hospital.Data.Enums
          Delete,
          AreYouSure,
          Dublicate,
+         PermanentDelete,
+         PermanentMessage,
+        AttachedDepartman,
 
         }
 
@@ -53,6 +56,10 @@ namespace Hospital.Data.Enums
                 ValidationStatus.Delete => "Record Is Deleted",
                 ValidationStatus.AreYouSure => "Are you sure you want to delete ?",
                 ValidationStatus.Dublicate => "This Identity Number already used",
+                ValidationStatus.PermanentDelete=> "Are you sure you want to Permanent delete ?",
+                ValidationStatus.PermanentMessage=> "Record Is Permanent Deleted",
+                ValidationStatus.AttachedDepartman=> "There is a personnel assigned to the department.",
+
                 _ => "Unknown status"
             }; 
         }

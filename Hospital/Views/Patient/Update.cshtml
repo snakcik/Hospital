@@ -6,38 +6,50 @@
 
 <h1>Update</h1>
 @model PatientDto
-@if (ViewBag.Personell == false)
+
+@if (ViewBag.Message != null)
 {
-    <div class="alert alert-danger" role="alert">
+    @if (ViewBag.Personell == false)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
         @ViewBag.Message
     </div>
+    }
+    
 }
 
 <form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    
     <div class="row">
         <div class="col-6">
             <div class="col-form-label">Name </div>
-            <input asp-for="Name" class="form-control" value="@Model.Name" />
+            <input asp-for="Name" class="form-control" value="@Model.Name" required  />
             <div class="col-form-label"> Last Name </div>
             <input asp-for="LastName" class="form-control" value="@Model.LastName" />
             <div class="col-form-label">Identity Number </div>
-            <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" />
+            <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" required />
             <div class="col-form-label">Phone</div>
-            <input asp-for="Phone" class="form-control" value="@Model.Phone" />
+            <input asp-for="Phone" class="form-control" value="@Model.Phone" required />
             <div class="col-form-label">E-Mail </div>
-            <input asp-for="Email" class="form-control" value="@Model.Email" />
+            <input asp-for="Email" class="form-control" value="@Model.Email" required />
             <div class="col-form-label">Illness </div>
-            <input asp-for="Illness" class="form-control" value="@Model.Illness" />
+            <input asp-for="Illness" class="form-control" value="@Model.Illness" required />
             <div class="col-form-label">Diagnosis </div>
-            <input asp-for="Diagnosis" class="form-control" value="@Model.Diagnosis" />
+            <input asp-for="Diagnosis" class="form-control" value="@Model.Diagnosis" required />
             <div class="col-form-label">Policilinic</div>
-            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics"></select>
+            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required></select>
             <div class="col-form-label">Personells</div>
-            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells"></select>
+            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required></select>
             <br />
 
-            <input type="submit" value="Kaydet" class="btn btn-primary" />
+            <button type="submit" value="Save" class="btn btn-primary" />
+            <i class="fa-regular fa-floppy-disk"> </i> Save </button>
 
         </div>
 

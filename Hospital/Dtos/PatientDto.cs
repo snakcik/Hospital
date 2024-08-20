@@ -1,4 +1,6 @@
-﻿namespace Hospital.Dtos
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace Hospital.Dtos
 {
     public class PatientDto
     {
@@ -13,6 +15,8 @@
         public string Policlinic { get; set; }
         public string Personell { get; set; }
         public bool? IsDeleted { get; set; }
+        public string FullName { get; set; }
 
     }
+
 }

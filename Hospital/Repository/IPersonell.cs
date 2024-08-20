@@ -9,5 +9,6 @@ namespace Hospital.Repository
         public bool UpdateBool(PersonellDto entity, string id);
         public List<SelectListItem> GetActiveTitle();
         public List<SelectListItem> GetActiveDepartman();
+        public PersonellDto GetByIdName(string id);
     }
 }

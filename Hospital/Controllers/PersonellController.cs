@@ -24,17 +24,35 @@ namespace Hospital.Controllers
         }
 
 
-        public IActionResult List()
+        public IActionResult List(string keyvalue)
         {
-            List<PersonellDto> pList = _personnel.GetActive();
+            if (string.IsNullOrEmpty(keyvalue))
+            {
+                List<PersonellDto> pList = _personnel.GetActive().OrderBy(x => x.Name).ToList();
 
-            return View(pList);
+                return View(pList);
+            }
+            var result = _personnel.Search(x => 
+         x.IsDeleted == true &&
+         x.Name.ToLower().Contains(keyvalue.ToLower()) ||
+         x.LastName.ToLower().Contains(keyvalue.ToLower()) ||
+         x.Title.ToLower().Contains(keyvalue.ToLower())    ||
+         x.IdentityNumber.ToString().Contains(keyvalue)).ToList();
+
+
+
+            return View(result);
+        }
+        public IActionResult Details(string Id)
+        {
+            var result = _personnel.GetByIdName(Id);
+            return View(result);
         }
 
         public IActionResult AllList()
         { 
-            var AllList = _personnel.GetAll();
-            
+            var AllList = _personnel.GetAll().OrderBy(x => x.Name).ToList();
+
             return View(AllList); 
         }
 
@@ -50,7 +68,7 @@ namespace Hospital.Controllers
         public IActionResult Add(PersonellDto personellDto)
         {
            bool validation = _personnel.Validation(personellDto);
-             if(validation =true)
+             if(validation ==true)
                 {
                 bool result = _personnel.AddBool(personellDto);
 
@@ -97,20 +115,28 @@ namespace Hospital.Controllers
         public IActionResult Update(PersonellDto personellDto,string Id)
         {
 
-            if (ModelState.IsValid)
+            bool validation = _personnel.Validation(personellDto);
+            if(validation==true)
             {
-               bool result = _personnel.UpdateBool(personellDto, Id);
-                if (result != false)
+                if (ModelState.IsValid)
                 {
-                    TempData["Message"] = GetMessageEn(ValidationStatus.Update);
-                    return RedirectToAction("List");
-                                        
+                    bool result = _personnel.UpdateBool(personellDto, Id);
+                    if (result != false)
+                    {
+                        TempData["Message"] = GetMessageEn(ValidationStatus.Update);
+                        return RedirectToAction("List");
+
+                    }
+                    ViewBag.Personell = false;
+                    ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
+
+
                 }
-                ViewBag.Personell = false;
-                ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
-
-
+                ViewBag.Titles = _personnel.GetActiveTitle();
+                ViewBag.Departman = _personnel.GetActiveDepartman();
+                return View(personellDto);
             }
+            ViewBag.Message = GetMessageEn(ValidationStatus.All);
             ViewBag.Titles = _personnel.GetActiveTitle();
             ViewBag.Departman = _personnel.GetActiveDepartman();
             return View(personellDto);
@@ -118,14 +144,17 @@ namespace Hospital.Controllers
 
         public IActionResult Delete(string id)
         {
+            
             var departman = _personnel.GetById(id);
 
             _personnel.Delete(id);
+            TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Delete);
             return RedirectToAction("List");
         }
         public IActionResult Remove(string id)
         {
             _personnel.Remove(id);
+            TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.PermanentMessage);
             return RedirectToAction("List");
         }
     }

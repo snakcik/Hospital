@@ -10,7 +10,7 @@
 
 <div class="card" style="width: 18rem;">
     <div class="card-body">
-    <h5 class="card-title">Product Detail</h5>
+    <h5 class="card-title">Patient Detail</h5>
     <p class="card-text">Hasta Adı : @Model.Name</p>
         <p class="card-text">Hasta Soyadı : @Model.LastName</p>
         <p class="card-text">Kimlik No : @Model.IdentityNumber</p>
@@ -21,7 +21,7 @@
         <p class="card-text">Başvurduğu Polikinlik : @Model.Policlinic</p>
         <p class="card-text">Doktoru : @Model.Personell</p>
 
-       @*  asp-controller ile ilgili controllere asp-action ile ise controller in ilgili action una rout yapıyoruz*@
+     
     <a asp-controller="Patient" asp-action="List" class="btn btn-primary">List</a>
   </div>
 

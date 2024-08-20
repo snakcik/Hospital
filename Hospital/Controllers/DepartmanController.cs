@@ -4,6 +4,7 @@ using Hospital.Dtos;
 using Hospital.Repository;
 using Hospital.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using static Hospital.Data.Enums.EnumMessage;
@@ -19,10 +20,27 @@ namespace Hospital.Controllers
             _departmanService = departmanService;
         }
 
-        public IActionResult List()
+        public IActionResult List(string keyvalue)
         {
-            var result = _departmanService.GetActive();
-            return View(result);
+            if (string.IsNullOrEmpty(keyvalue))
+            {
+                var list = _departmanService.GetActive().OrderBy(x=>x.Name).ToList();
+                
+                return View(list);
+            }
+            else
+            {
+                var result = _departmanService.Search(x => x.IsDeleted == true && x.Name.ToLower().Contains(keyvalue.ToLower())).ToList();
+                return View(result);
+            }
+
+            
+
+        }
+        public IActionResult AllList()
+        {
+            var AllList = _departmanService.GetAll().OrderBy(x => x.Name).ToList();
+            return View(AllList);
         }
 
         public IActionResult Add()
@@ -37,7 +55,7 @@ namespace Hospital.Controllers
             if (validation == true)
             {
                 _departmanService.Add(departmanDto);
-                TempData["Success"] = EnumMessage.GetMessageEn(ValidationStatus.Success);
+                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Success);
                 return RedirectToAction("List");
             }
             else
@@ -84,9 +102,10 @@ namespace Hospital.Controllers
             if (result!=true)
             {
                 _departmanService.Delete(id);
+                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Delete);
                 return RedirectToAction("List");
             }
-            TempData["Attached"] = "Departmana Ekli Bir Personel Var";
+            TempData["Attached"] = EnumMessage.GetMessageEn(ValidationStatus.AttachedDepartman);
             return RedirectToAction("List");
 
         }
@@ -98,15 +117,10 @@ namespace Hospital.Controllers
             if (result==false)
             {
                 _departmanService.Remove(id);
+                TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.PermanentMessage);
                 return RedirectToAction("List");
             }
             return View();
-        }
-
-        public IActionResult AllList()
-        {
-            var AllList = _departmanService.GetAll();
-            return View(AllList);
         }
 
         public IActionResult Details(string id)

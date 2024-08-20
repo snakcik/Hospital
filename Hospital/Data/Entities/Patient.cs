@@ -1,4 +1,5 @@
 ﻿using Hospital.Data.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hospital.Data.Entities
 {
@@ -12,5 +13,6 @@ namespace Hospital.Data.Entities
         public Policlinic Policlinic { get; set; }
         public Personell Personell { get; set; }
 
+  
     }
 }

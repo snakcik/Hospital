@@ -11,5 +11,9 @@
         public string Title { get; set; }
         public string Departman { get; set; }
         public bool? IsDeleted { get; set; }
+       
+
+     
+
     }
 }

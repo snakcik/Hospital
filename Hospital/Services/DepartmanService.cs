@@ -94,10 +94,6 @@ namespace Hospital.Services
             return null;
         }
 
-        public IQueryable<Departman> Search(Expression<Func<Departman, bool>> predicate)
-        {
-            return _db.Set<Departman>().Where(predicate);
-        }
 
         public IQueryable<DepartmanDto> Search(Expression<Func<DepartmanDto, bool>> predicate)
         {
@@ -106,8 +102,9 @@ namespace Hospital.Services
                       {
                           Id = d.Id,
                           Name = d.Name,
-                          Description = d.Description
-                      }).AsQueryable().Where(predicate);
+                          Description = d.Description,
+                          IsDeleted=d.ActivePasive,
+                      }).Where(predicate).AsQueryable();
         }
 
         public IQueryable<DepartmanDto> Serach(Expression<Func<DepartmanDto, bool>> predicate)

@@ -16,15 +16,23 @@ namespace Hospital.Controllers
             _titleService = title;
         }
 
-        public IActionResult List()
+        public IActionResult List(string keyvalue)
         {
-            List<TitleDto> tList = _titleService.GetActive();
-            return View(tList);
+            if (string.IsNullOrEmpty(keyvalue))
+            {
+
+                List<TitleDto> tList = _titleService.GetActive().OrderBy(x => x.Name).ToList();
+                return View(tList);
+            }
+         
+            var result = _titleService.Search(x=>x.IsDeleted==true&&
+            x.Name.ToLower().Contains(keyvalue.ToLower())).ToList();
+            return View(result);
         }
 
         public IActionResult AllList()
         { 
-            var ActiveList = _titleService.GetAll();
+            var ActiveList = _titleService.GetAll().OrderBy(x => x.Name).ToList();
 
             return View(ActiveList);
         }
@@ -60,12 +68,17 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Update(TitleDto titleDto,string Id)
         {
-            if (ModelState.IsValid)
+            bool validation = _titleService.Validation(titleDto);
+            if(validation==true)
             {
-                _titleService.Update(titleDto, Id);
-                TempData["Message"] = GetMessageEn(ValidationStatus.Update);
-                return RedirectToAction("List");
+                if (ModelState.IsValid)
+                {
+                    _titleService.Update(titleDto, Id);
+                    TempData["Message"] = GetMessageEn(ValidationStatus.Update);
+                    return RedirectToAction("List");
+                }
             }
+            TempData["Message"] = GetMessageEn(ValidationStatus.All);
             return View(titleDto);
         }
 
@@ -74,11 +87,13 @@ namespace Hospital.Controllers
             var title = _titleService.GetById(id);
 
             _titleService.Delete(id);
+            TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.Delete);
             return RedirectToAction("List");
         }
         public IActionResult Remove(string id)
         {
             _titleService.Remove(id);
+            TempData["Message"] = EnumMessage.GetMessageEn(ValidationStatus.PermanentMessage);
             return RedirectToAction("List");
         }
 

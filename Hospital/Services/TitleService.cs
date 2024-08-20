@@ -88,7 +88,12 @@ namespace Hospital.Services
 
         public IQueryable<TitleDto> Search(Expression<Func<TitleDto, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Set<Title>().Select(x=> new TitleDto { 
+                Id = x.Id,
+                Name=x.Name,
+                Description= x.Description,
+                IsDeleted= x.ActivePasive
+            }).Where(predicate).AsQueryable();
         }
 
         public void Update(TitleDto entity, string Id)

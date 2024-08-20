@@ -89,7 +89,11 @@ namespace Hospital.Services
 
         public IQueryable<InventoryDto> Search(Expression<Func<InventoryDto, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Set<Inventory>().Select(x=> new InventoryDto {
+            Id = x.Id,
+            Name = x.Name,
+            Stock = x.Stock,
+            IsDeleted=x.ActivePasive}).Where(predicate).AsQueryable();
         }
 
         public void Update(InventoryDto entity, string id)

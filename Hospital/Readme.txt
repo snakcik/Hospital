@@ -12,15 +12,16 @@ DepartmanController e IDepartman Dependency injection yapılıp add metoduna Dep
 
 
 __________________________________________________________________________________________________________________________
------------------------	HATA VE EKSİKLER -----------------------------------
-Validation işlemi = Update sayfaları için Validation tamamlanmadı Düzelt
-Messages = hala normal mesajlar var kontrol et ve mesajları enum dan al 
-Patient = Çift kimlik no kaydı yapmıyor sayfa yeniden listeye dönüyor düzelt 
-Departman = ekledin mesajı listeye gelmiyor düzelt
-Pattien = Sayfaya doktorun adı soyadı da gelsi.
-Remove = kalıcı silme mesajlarını düzelt.
 
-----------------------EKLENECEKLER -----------------------------------------
+-----------------------------------------HATA VE EKSİKLER ----------------------------------------
+			Validation işlemi = Update sayfaları için Validation tamamlanmadı Düzelt (Tamamlandı)
+			Messages = hala normal mesajlar var kontrol et ve mesajları enum dan al (Düzeltildi)
+			Patient = Çift kimlik no kaydı yapmıyor sayfa yeniden listeye dönüyor düzelt (Düzeltildi)
+			Departman = ekledin mesajı listeye gelmiyor düzelt(Düzeltildi)
+			Pattien = Sayfaya doktorun adı soyadı da gelsin. (Düzeltildi)
+			Remove = kalıcı silme mesajlarını düzelt. (Düzeltildi)
+
+----------------------------------------EKLENECEKLER -----------------------------------------
 !!!!!!!!!!!!!!!!!!!!!!!! Basit bir arama eklenmeli Acil !!!!!!!!!!!!!!!!!!!!!!!!
 
 Hastaya Reçete sayfası eklenecek

@@ -1,0 +1,20 @@
+﻿@using Hospital.Dtos
+@model PersonellDto
+
+<h1>Detail</h1>
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Personell Detail</h5>
+        <p class="card-text">Name: @Model.Name</p>
+        <p class="card-text">Last Name : @Model.LastName</p>
+        <p class="card-text">Identity Number : @Model.IdentityNumber</p>
+        <p class="card-text">Phone : @Model.Phone</p>
+        <p class="card-text">E-mail : @Model.Email</p>
+        <p class="card-text">Title : @Model.Title</p>
+        <p class="card-text">Departman : @Model.Departman</p>
+
+
+
+        <a asp-controller="Personell" asp-action="List" class="btn btn-primary">List</a>
+    </div>

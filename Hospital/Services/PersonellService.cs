@@ -144,7 +144,17 @@ namespace Hospital.Services
 
         public IQueryable<PersonellDto> Search(Expression<Func<PersonellDto, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Set<Personell>().Select(x=> new PersonellDto { 
+                Id = x.Id, 
+                Name = x.Name, 
+                LastName = x.LastName, 
+                IdentityNumber = x.IdentityNumber,
+                Phone = x.Phone,
+                Email = x.Email,
+                Title = x.Title.Name,
+                Departman= x.Departman.Name,
+                IsDeleted=x.ActivePasive,
+            }).Where(predicate).AsQueryable();
         }
 
         public void Update(PersonellDto entity, string id)
@@ -252,6 +262,22 @@ namespace Hospital.Services
             }
 
             return Validation;
+        }
+
+        public PersonellDto GetByIdName(string id)
+        {
+            var personellDto = _db.Set<Personell>().Include(x => x.Departman).Include(x => x.Title).First(x => x.Id == id);
+            return new PersonellDto { 
+                Id = id, 
+                Name = personellDto.Name,
+                LastName = personellDto.LastName,
+                IdentityNumber = personellDto.IdentityNumber,
+                Phone = personellDto.Phone,
+                Email = personellDto.Email,
+                Title=personellDto.Title.Name,
+                Departman=personellDto.Departman.Name,
+            };
+
         }
     }
 }

@@ -162,7 +162,18 @@ namespace Hospital.Services
 
         public IQueryable<PatientDto> Search(Expression<Func<PatientDto, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _db.Set<Patient>().Select(x=> new PatientDto { 
+                Id = x.Id, Name = x.Name, 
+                LastName = x.LastName, 
+                IdentityNumber = x.IdentityNumber,
+                Phone = x.Phone,
+                Email = x.Email,
+                Illness = x.Illness,
+                Diagnosis = x.Diagnosis,
+                Policlinic = x.Policlinic.Name,
+                Personell = x.Personell.Name,
+                IsDeleted=x.ActivePasive,
+            }).Where(predicate).AsQueryable();
         }
 
         public void Update(PatientDto entity, string Id)
@@ -231,6 +242,7 @@ namespace Hospital.Services
              .Select(a => new SelectListItem
              {
                  Text = a.Name,
+                 
                  Value = a.Id
              })
              .ToList();
@@ -242,10 +254,10 @@ namespace Hospital.Services
 
             return _db.Personells
               .Where(x => x.ActivePasive == true)
-              .Where(x=>x.Title.Name == "Doktor")
+              .Where(x=>x.Title.Name.ToLower().Contains("dok"))
               .Select(a => new SelectListItem
               {
-                  Text = a.Name,
+                  Text =a.Title.Name+" "+ a.Name+" "+a.LastName,
                   Value = a.Id
               })
               .ToList();
@@ -272,7 +284,38 @@ namespace Hospital.Services
             return Validation;
         }
 
-        public List<NewArrayExpression > Expressions { get; set; }
+        public PatientDto GetByIdName(string id)
+        {
+
+            var patientDto = _db.Set<Patient>().Include(x => x.Policlinic).Include(x => x.Personell).First(x => x.Id == id);
+               
+
+            if (patientDto != null)
+            {
+                string FullName = _db.Set<Personell>().Select(x =>x.Title.Name+" "+ x.Name+" "+x.LastName).FirstOrDefault();
+                return new PatientDto
+                {
+                    Id = patientDto.Id,
+                    Name = patientDto.Name,
+                    LastName = patientDto.LastName,
+                    IdentityNumber = patientDto.IdentityNumber,
+                    Phone = patientDto.Phone,
+                    Email = patientDto.Email,
+                    Illness = patientDto.Illness,
+                    Diagnosis = patientDto.Diagnosis,
+                    Policlinic = patientDto.Policlinic.Name,
+                    Personell = FullName
+                    
+                };
+
+            }
+
+            return null;
+        }
+
+                     
+
+        
 
 
 

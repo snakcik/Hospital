@@ -8,5 +8,8 @@ namespace Hospital.Data.Entities
         public string Description { get; set; }
         public int Stock { get; set; }
 
+        public  PrescriptionItems PrescriptionItems { get; set; }
+
+
     }
 }

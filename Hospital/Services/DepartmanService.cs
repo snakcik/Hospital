@@ -88,7 +88,8 @@ namespace Hospital.Services
                 {
                     Id = departman.Id,
                     Name = departman.Name,
-                    Description = departman.Description
+                    Description = departman.Description,
+                  
                 };
             }
             return null;

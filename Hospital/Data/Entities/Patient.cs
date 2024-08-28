@@ -12,6 +12,8 @@ namespace Hospital.Data.Entities
 
         public Policlinic Policlinic { get; set; }
         public Personell Personell { get; set; }
+        public ICollection<Prescription> Prescription { get; set; }
+       
 
   
     }

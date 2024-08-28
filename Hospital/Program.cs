@@ -18,6 +18,9 @@ builder.Services.AddScoped<IPatient, PatientService>();
 builder.Services.AddScoped<IPersonell, PersonellService>();
 builder.Services.AddScoped<IPoliclinic, PoliclinicService>();
 builder.Services.AddScoped<ITitle, TitleService>();
+builder.Services.AddScoped<IPrescription, PrescriptionService>();
+builder.Services.AddScoped<IPrescriptionItems, PrescriptionItemsService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

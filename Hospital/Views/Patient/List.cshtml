@@ -37,6 +37,7 @@
             <th scope="col">Phone</th>
             <th scope="col">E-Mail</th>
             <th scope="col">Actions</th>
+            <th scope="col">Prescription Actions</th>
 
         </tr>
     </thead>
@@ -55,6 +56,11 @@
                     <a href="Delete/@item.Id" onclick="return Delete();" id="@item.Name" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
                     <a href="Update/@item.Id" class="btn btn-primary"  ><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp;
                     <a href="Detail/@item.Id" class="btn btn-warning" style="color:white"><i class="fa-solid fa-circle-info"></i> Detail</a>
+                </td>
+                <td>
+                    <a asp-controller="Prescription" asp-action="add" asp-route-patientId="@item.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Add Prescription</a>
+                    <a asp-controller="Prescription" asp-action="PrescriptionDetail" asp-route-patientId="@item.Id" class="btn btn-success" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Show Prescription</a>
+
                 </td>
 
             </tr>

@@ -13,12 +13,17 @@ namespace Hospital.Controllers
     public class PatientController : Controller
     {
         private readonly IPatient _patient;
+        private readonly IPrescription _prescription;
+        private readonly IPrescriptionItems _prescriptionItems;
         private readonly Context _db;
 
-        public PatientController(IPatient patient, Context context)
+        public PatientController(IPatient patient, Context context, IPrescriptionItems prescriptionItems, IPrescription prescription)
         {
+            
+            _prescription = prescription;
             _patient = patient;
             _db = context;
+            _prescriptionItems = prescriptionItems;
         }
 
         public IActionResult List(string keyvalue)
@@ -87,6 +92,7 @@ namespace Hospital.Controllers
        
 
         }
+
         public IActionResult Update(string Id)
         {
             var UpdatedPatient = _patient.GetById(Id);

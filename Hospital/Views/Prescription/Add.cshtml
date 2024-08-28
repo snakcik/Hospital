@@ -1,0 +1,38 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "Add";
+}
+@model PrescriptionDto
+
+<h1>Add</h1>
+
+
+
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+            <input type="hidden" asp-for="PatientId" class="form-control" placeholder=" @ViewBag.PatientId" required />
+            <label>Patient Name</label>
+            <br />
+            <input type="text" readonly  class="form-control" value=" @ViewBag.PatientName" required />
+            <br />
+            <label>Docror Name</label>
+            <select class="form-control" asp-for="DoctorId" asp-items="ViewBag.ActivePersonell" required></select>
+            <br />
+            <label>Description</label>
+            <input type="text" asp-for="Description" class="form-control" placeholder="Prescription Description" required />
+            <br />
+            
+
+            <button type="submit" value="Save" class="btn btn-primary" />
+            <i class="fa-regular fa-floppy-disk"> </i> Save </button>
+
+        </div>
+
+
+    </div>
+
+</form>

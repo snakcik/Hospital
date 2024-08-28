@@ -154,6 +154,9 @@ namespace Hospital.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PrescriptionItemsId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -161,6 +164,8 @@ namespace Hospital.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrescriptionItemsId");
 
                     b.ToTable("Inventorys");
                 });
@@ -305,6 +310,81 @@ namespace Hospital.Migrations
                     b.ToTable("Policlinics");
                 });
 
+            modelBuilder.Entity("Hospital.Data.Entities.Prescription", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("ActivePasive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PersonellId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PrescriptionItemsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("PersonellId");
+
+                    b.HasIndex("PrescriptionItemsId");
+
+                    b.ToTable("Prescription");
+                });
+
+            modelBuilder.Entity("Hospital.Data.Entities.PrescriptionItems", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("ActivePasive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InventoryId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Piece")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrescriptionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrescriptionItems");
+                });
+
             modelBuilder.Entity("Hospital.Data.Entities.Title", b =>
                 {
                     b.Property<string>("Id")
@@ -346,6 +426,15 @@ namespace Hospital.Migrations
                     b.Navigation("AppRole");
                 });
 
+            modelBuilder.Entity("Hospital.Data.Entities.Inventory", b =>
+                {
+                    b.HasOne("Hospital.Data.Entities.PrescriptionItems", "PrescriptionItems")
+                        .WithMany("inventories")
+                        .HasForeignKey("PrescriptionItemsId");
+
+                    b.Navigation("PrescriptionItems");
+                });
+
             modelBuilder.Entity("Hospital.Data.Entities.Patient", b =>
                 {
                     b.HasOne("Hospital.Data.Entities.Personell", "Personell")
@@ -384,6 +473,30 @@ namespace Hospital.Migrations
                     b.Navigation("Title");
                 });
 
+            modelBuilder.Entity("Hospital.Data.Entities.Prescription", b =>
+                {
+                    b.HasOne("Hospital.Data.Entities.Patient", "Patient")
+                        .WithMany("Prescription")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.Data.Entities.Personell", "Personell")
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("PersonellId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Hospital.Data.Entities.PrescriptionItems", "PrescriptionItems")
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("PrescriptionItemsId");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Personell");
+
+                    b.Navigation("PrescriptionItems");
+                });
+
             modelBuilder.Entity("Hospital.Data.Entities.AppRole", b =>
                 {
                     b.Navigation("AppUser");
@@ -394,9 +507,23 @@ namespace Hospital.Migrations
                     b.Navigation("Personell");
                 });
 
+            modelBuilder.Entity("Hospital.Data.Entities.Patient", b =>
+                {
+                    b.Navigation("Prescription");
+                });
+
             modelBuilder.Entity("Hospital.Data.Entities.Personell", b =>
                 {
                     b.Navigation("Patients");
+
+                    b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("Hospital.Data.Entities.PrescriptionItems", b =>
+                {
+                    b.Navigation("Prescriptions");
+
+                    b.Navigation("inventories");
                 });
 
             modelBuilder.Entity("Hospital.Data.Entities.Title", b =>

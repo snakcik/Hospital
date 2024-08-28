@@ -11,5 +11,6 @@ namespace Hospital.Data.Entities
         public Departman Departman { get; set; }
         public Title Title { get; set; }
         public ICollection<Patient> Patients { get; set; }
+        public ICollection<Prescription>? Prescriptions { get; set; }
     }
 }

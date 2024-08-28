@@ -1,0 +1,38 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "PrescriptionDetail";
+}
+
+<h1>PrescriptionDetail</h1>
+
+@model PrescriptionDto
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col"> Patient Name</th>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">Prescription Description</th>
+            <th scope="col">Add Medicine</th>
+            
+
+        </tr>
+    </thead>
+    <tbody>
+
+                <td>@Model.PatientName</td>
+                <td>@Model.DoctorName</td>
+                <td>@Model.CreteDate</td>
+                <td>@Model.Description</td>
+                <td> <a asp-controller="PrescriptionItems" asp-action="add" asp-route-patientId="@Model.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Add Medicine</a></td>
+                
+                
+
+            </tr>
+        
+
+
+    </tbody>

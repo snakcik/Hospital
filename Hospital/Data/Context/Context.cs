@@ -15,12 +15,21 @@ namespace Hospital.Data.Context
         public DbSet<Personell> Personells { get; set; }
         public DbSet<Policlinic> Policlinics { get; set; }
         public DbSet<Title> Titles { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Prescription> PrescriptionsItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Prescription>()
+                .HasOne(p => p.Personell)
+                .WithMany(p => p.Prescriptions)
+                .HasForeignKey(p => p.PersonellId)
+                .OnDelete(DeleteBehavior.Restrict); 
+        }
 
 
     }

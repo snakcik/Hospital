@@ -32,4 +32,7 @@ Hastaya Reçete sayfası eklenecek
 Fatura Eklenecek
 	Inventory tablosu güncellenecek = inventory deki malzemeye tanımı gelmesi gerekli (Sarf Malzeme,ilaç vs(ilacı reçeteye eklerken gazlı bez yazmaya gerek yok))
 									  inventory deki malzemenin birim fiyatı gelmesi gerekli (ilaç yazdığımızda faturaya ekleyebilelim
-	Invoice detail tablosu eklenecek = hasta adı, işlem yapan doktoradı, verilen hizmetler.
+	Invoice detail tablosu eklenecek = hasta adı, işlem yapan doktoradı, verilen hizmetle
+
+	___________________BUG___________________
+	Departman ve personel update te sıkıntı var çalışmıyor

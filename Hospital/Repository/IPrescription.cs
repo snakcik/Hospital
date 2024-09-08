@@ -8,6 +8,8 @@ namespace Hospital.Repository
     {
         public List<SelectListItem> GetActivePersonell();
         public List<SelectListItem> GetActivePatient();
+        public List<SelectList> GetMedicine();
+        public List<PrescriptionDto> GetPrescriptionList(string Id);
         public string StringAdd(PrescriptionDto entity);
     }
 }

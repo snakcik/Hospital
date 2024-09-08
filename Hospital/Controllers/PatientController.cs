@@ -40,8 +40,6 @@ namespace Hospital.Controllers
             x.LastName.ToLower().Contains(keyvalue)|| 
             x.IdentityNumber.ToString().Contains(keyvalue)).ToList();
                
-                
-
             return View(result);
 
 
@@ -109,8 +107,7 @@ namespace Hospital.Controllers
             bool validation = _patient.Validation(patientDto);
             if(validation==true) 
             {
-                if (ModelState.IsValid)
-                {
+                
 
                     bool result = _patient.UpdateBool(patientDto, Id);
                     if (result == true)
@@ -124,7 +121,7 @@ namespace Hospital.Controllers
                         ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
                     }
 
-                }
+                
                 ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
                 ViewBag.Policlinics = _patient.GetActivePoliclinics();
                 return View(patientDto);

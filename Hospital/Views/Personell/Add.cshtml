@@ -36,12 +36,16 @@
             <br />
             <input asp-for="Email" class="form-control" placeholder="E-Posta" required />
             <br />
-            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles" required></select>
+            <select class="form-control" asp-for="Title" asp-items="ViewBag.Titles" required>
+                <option value="" disabled selected hidden>Select Title... </option>
+            </select>
             <br />
-            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman" required></select>
+            <select class="form-control" asp-for="Departman" asp-items="ViewBag.Departman" required>
+                <option value="" disabled selected hidden>Select Departman ... </option>
+            </select>
             <br />
 
-            <<button type="submit" value="Save" class="btn btn-primary" />
+            <button type="submit" value="Save" class="btn btn-primary" />
             <i class="fa-regular fa-floppy-disk"> </i> Save </button>
 
         </div>

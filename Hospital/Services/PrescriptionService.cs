@@ -1,11 +1,13 @@
 ﻿using Hospital.Data.Context;
 using Hospital.Data.Entities;
 using Hospital.Dtos;
+using Hospital.Models;
 using Hospital.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Hospital.Services
 {
@@ -20,7 +22,17 @@ namespace Hospital.Services
 
         public void Add(PrescriptionDto entity)
         {
-            throw new NotImplementedException();
+            var prescription = new Prescription
+            {
+                PersonellId = entity.DoctorId,
+                PatientId = entity.PatientId,
+                Description = entity.Description,
+                CreatedAt = DateTime.Now
+            };
+
+            _db.Set<Prescription>().Add(prescription);
+            _db.SaveChanges();
+
         }
 
         public void Delete(string id)
@@ -58,9 +70,9 @@ namespace Hospital.Services
 
         public PrescriptionDto GetById(string id)
         {
-            var prescription = _db.Set<Prescription>().Include(x=>x.Personell).Include(x=>x.Patient)
-                .Where(x=>x.PatientId == id).FirstOrDefault();
-            //var prescription = _db.Set<Prescription>().Find(PatientId);
+            var prescription = _db.Set<Prescription>().Include(x => x.Personell).Include(x => x.Patient)
+                .Where(x => x.PatientId == id).FirstOrDefault();
+            
                 if (prescription != null)
                 {
 
@@ -79,6 +91,47 @@ namespace Hospital.Services
 
             return null;
 
+        }
+
+        public List<SelectList> GetMedicine()
+        {
+            var MedicineList = _db.Set<Inventory>().Select(x => new { x.Name,x.Id }).ToList();
+            return new List<SelectList>
+            {
+                new SelectList(MedicineList)
+            };
+        }
+
+        public List<PrescriptionDto> GetPrescriptionList(string Id)
+        {
+            var prescription = _db.Set<Prescription>()
+                .Include(x => x.Personell)
+                .Include(x => x.Patient)
+                .Where(x => x.PatientId == Id)
+                .ToList();
+
+            if (prescription != null)
+            {
+
+                return prescription.Select(prescription => new PrescriptionDto
+                {
+
+                    Id = prescription.Id,
+                    DoctorId = prescription.PersonellId,
+                    PatientId = prescription.PatientId,
+                    DoctorName = prescription.Personell.Name + " " + prescription.Personell.LastName,
+                    PatientName = prescription.Patient.Name + " " + prescription.Patient.LastName,
+                    PatientIdentity = prescription.Patient.IdentityNumber.ToString(),
+                    CreteDate = prescription.CreatedAt,
+
+
+
+
+                }).ToList();
+          
+            }
+
+            return null;
         }
 
         public void Remove(string Id)
@@ -104,6 +157,8 @@ namespace Hospital.Services
             _db.Set<Prescription>().Add(prescription);
             _db.SaveChanges();
             var prescriptionId = prescription.Id;
+
+
             return prescriptionId;
         }
 

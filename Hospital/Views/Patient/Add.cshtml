@@ -42,9 +42,13 @@
             <br />
             <input asp-for="Diagnosis" class="form-control" placeholder="Diagnosis" required />
             <br />
-            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required></select>
+            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required>
+                <option value="" disabled selected hidden>Select a Policlinic</option>
+            </select>
             <br />
-            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required></select>
+            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required>
+                <option value="" disabled selected hidden>Select a Doctor</option>
+            </select>
             <br />
 
             <button type="submit" value="Save" class="btn btn-primary" />

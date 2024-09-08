@@ -1,7 +1,10 @@
-﻿using Hospital.Data.Entities;
+﻿using Hospital.Data.Context;
+using Hospital.Data.Entities;
 using Hospital.Dtos;
+using Hospital.Models;
 using Hospital.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hospital.Controllers
 {
@@ -10,12 +13,16 @@ namespace Hospital.Controllers
         private readonly IPrescription _Prescription;
         private readonly IPrescriptionItems _Items;
         private readonly IPatient _patient;
+        private readonly IInventory _inventory;
+        private readonly Context _db;
 
-        public PrescriptionController(IPrescription prescription, IPatient patient,IPrescriptionItems items)
+        public PrescriptionController(IPrescription prescription, IPatient patient,IPrescriptionItems items,IInventory inventory,Context db)
         {
             _Prescription = prescription;
             _patient = patient;
             _Items = items;
+            _inventory = inventory;
+            _db = db;
         }
 
         public IActionResult Add(string patientId)
@@ -37,23 +44,39 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult Add(PrescriptionDto prescription)
         {
-
-           var prescriptionId = _Prescription.StringAdd(prescription);
-            return RedirectToAction("AddMedicines", new { prescriptionId = prescriptionId }); ;
+            _Prescription.GetMedicine();
+            _Prescription.Add(prescription);
+            return RedirectToAction("List", "Patient");
         }
 
 
 
         public IActionResult PrescriptionDetail (string patientId)
         {
-            var prescription = _Prescription.GetById(patientId);
+            var prescription = _Prescription.GetPrescriptionList(patientId);
 
             return View(prescription);
         }
 
         public IActionResult AddMedicines(string prescriptionId)
-        { 
-            return View(); 
+        {
+            ViewBag.Inventory = _Items.GetInventory();
+
+            ViewBag.PrescriptionId = prescriptionId;
+            
+          ViewBag.medicines = _Items.GetItems(prescriptionId);
+
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult AddMedicines(PrescriptionItemsDto prescription,string prescriptionId) 
+        {
+            _Items.Add(prescription);
+            ViewBag.Inventory = _Items.GetInventory();
+            ViewBag.PrescriptionId = prescriptionId;
+            ViewBag.medicines = _Items.GetItems(prescriptionId);
+            return View();
         }
 
 

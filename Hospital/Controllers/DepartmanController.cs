@@ -82,12 +82,11 @@ namespace Hospital.Controllers
             
             if (validation == true)
             {
-                if (ModelState.IsValid)
-            {
+             
                 _departmanService.Update(departmanDto, id);
                 TempData["Update"] = EnumMessage.GetMessageEn(ValidationStatus.Update);
                     return RedirectToAction("List");
-            }
+            
             }
             else
                 ViewBag.All = EnumMessage.GetMessageEn(ValidationStatus.All);

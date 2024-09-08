@@ -20,6 +20,13 @@
     </div>
 
 }
+@if (TempData["Update"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Update"]
+    </div>
+
+}
 <script>
     function Delete() {
         var button = event.target.closest('a');

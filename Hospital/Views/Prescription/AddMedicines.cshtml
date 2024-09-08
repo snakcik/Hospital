@@ -1,0 +1,76 @@
+﻿@using Hospital.Data.Entities
+@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "AddMedicines";
+}
+@model PrescriptionItemsDto
+
+    
+
+
+<h1>AddMedicines</h1>
+
+<form method="post">
+
+    <div class="row">
+        <div class="col-6">
+
+            <input type="hidden" asp-for="PrescriptionId" value="@ViewBag.PrescriptionId" />
+            <label>Select Medicine</label>
+
+            <select class="form-control" asp-for="InventoryId" asp-items="ViewBag.Inventory" required>
+                <option value="" disabled selected hidden>Select Medicine... </option>
+            </select>
+            
+            <br />
+
+
+            <button type="submit" value="Save" class="btn btn-primary" />
+            <i class="fa-regular fa-floppy-disk"> </i> Save </button>
+
+        </div>
+
+
+    </div>
+
+</form>
+
+
+@{
+    List<PrescriptionItemsDto> medicineee = ViewBag.medicines;
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col"> Name</th>
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @if(ViewBag.medicines != null)
+        {
+            @foreach (var result in medicineee)
+            {             
+                @foreach ( var x in result.InventoryNames)
+                {
+       
+                   <tr >
+                       <td>@x</td>
+                       <td>
+                       <a href="" onclick="return Delete();" id="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                   </tr>
+       
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
+

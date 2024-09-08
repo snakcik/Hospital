@@ -35,4 +35,5 @@ Fatura Eklenecek
 	Invoice detail tablosu eklenecek = hasta adı, işlem yapan doktoradı, verilen hizmetle
 
 	___________________BUG___________________
-	Departman ve personel update te sıkıntı var çalışmıyor
+	Departman ve personel update te sıkıntı var çalışmıyor  
+	Düzeltilti 060924

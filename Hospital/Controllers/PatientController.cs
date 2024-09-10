@@ -155,17 +155,17 @@ namespace Hospital.Controllers
         {
             if (string.IsNullOrEmpty(keyvalue))
             {
-                List<PatientDto> pList = _patient.GetActive().OrderBy(x => x.Name).ToList();
-                return View(pList);
+                List<PatientDto> dList = _patient.GetActive().OrderBy(x => x.Name).ToList();
+                return View(dList);
             }
 
-            var result = _patient.Search(x =>
+            var dResult = _patient.Search(x =>
             x.IsDeleted == true &&
             x.Name.ToLower().Contains(keyvalue.ToLower()) ||
             x.LastName.ToLower().Contains(keyvalue) ||
             x.IdentityNumber.ToString().Contains(keyvalue)).ToList();
 
-            return View(result);
+            return View(dResult);
 
         }
         public IActionResult DoctorEdit(string Id)

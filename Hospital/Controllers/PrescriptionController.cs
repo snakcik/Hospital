@@ -46,7 +46,7 @@ namespace Hospital.Controllers
         {
             _Prescription.GetMedicine();
             _Prescription.Add(prescription);
-            return RedirectToAction("List", "Patient");
+            return RedirectToAction("DoctorList", "Patient");
         }
 
 

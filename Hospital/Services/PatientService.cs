@@ -13,8 +13,6 @@ namespace Hospital.Services
     public class PatientService : IPatient
     {
        
-       
-
         private readonly Context _db;
         public PatientService(Context db)
         {
@@ -313,12 +311,20 @@ namespace Hospital.Services
             return null;
         }
 
-                     
+        public bool DoctorUpdateBool(PatientDto entity,string Id)
+        {
+            bool duplicate = true;
+            var ExistingPatient = _db.Set<Patient>().Find(Id);
 
-        
-
-
-
-
+            if (ExistingPatient != null) 
+            {
+                ExistingPatient.Diagnosis = entity.Diagnosis;
+                _db.Update(ExistingPatient);
+                _db.SaveChanges();
+                
+            }
+                return duplicate;
+        }
+           
     }
 }

@@ -180,33 +180,15 @@ namespace Hospital.Controllers
         [HttpPost]
         public IActionResult DoctorEdit(PatientDto patientDto ,string Id)
         {
-            bool validation = _patient.Validation(patientDto);
-            if (validation == true)
-            {
-
-
-                bool result = _patient.UpdateBool(patientDto, Id);
-                if (result == true)
-                {
-                    TempData["Message"] = GetMessageEn(ValidationStatus.Update);
-                    return RedirectToAction("DoctorList");
-                }
-                else
-                {
-                    ViewBag.Personell = false;
-                    ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
-                }
-
-
-                ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
-                ViewBag.Policlinics = _patient.GetActivePoliclinics();
-                return View(patientDto);
-            }
-            ViewBag.Message = GetMessageEn(ValidationStatus.All);
-            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
-            ViewBag.Policlinics = _patient.GetActivePoliclinics();
-            return View(patientDto);
+              bool result = _patient.DoctorUpdateBool(patientDto, Id);
+              TempData["Message"] = GetMessageEn(ValidationStatus.Update);
+              return RedirectToAction("DoctorList");
+                
+                
         }
+            
+            
+        
 
     }
 }

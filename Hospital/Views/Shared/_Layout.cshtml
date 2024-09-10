@@ -12,42 +12,160 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hospital</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+<nav
+        class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+      >
+        <div class="container-fluid">
+          <a
+            class="navbar-brand"
+            asp-area=""
+            asp-controller="Home"
+            asp-action="Index"
+            >Hospital</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
+          >
+            <ul class="navbar-nav flex-grow-1">
+              <li class="nav-item">
+                <a
+                  class="nav-link text-dark"
+                  asp-area=""
+                  asp-controller="Home"
+                  asp-action="Index"
+                  >Home</a>
+              </li>
 
-                    <ul class="navbar-nav flex-grow-1">
-                                               
+              <li class="nav-item">
+                <a
+                  style="position: absolute"
+                  class="nav-link text-dark"
+                  asp-area=""
+                  asp-controller="HumanResource"
+                  asp-action="List"
+                  ><div class="dropdown">
+                    <a
+                      class="btn dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      style="
+                        position: relative;
+                        border: none;
+                        outline: none;
+                        padding-left: 0px;
+                        padding-top: 9px;
+                        color: black;
+                      "
+                    >
+                      Human Resource
+                    </a>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Departman" asp-action="List">Departman</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="List">Inventory</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="List">Patient</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Personell" asp-action="List">Personell</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Policlinic" asp-action="List">Policlinic</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Title" asp-action="List">Title</a>
-                        </li>
-                     
-                     
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" asp-controller="Title" asp-action="List">Title </a></li>
+                      <li>
+                      <a class="dropdown-item" asp-controller="Departman" asp-action="List">Departman</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" asp-controller="Personell" asp-action="List">Personell</a>
+                      </li>
                     </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  style="position: absolute"
+                  class="nav-link text-dark"
+                  asp-area=""
+                  asp-controller="Storage"
+                  asp-action="List"
+                  ><div class="dropdown">
+                    <a class="btn dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      style="
+                        position: relative;
+                        border: none;
+                        outline: none;
+                        padding-top: 9px;
+                        padding-left: 0px;
+                        color: black;
+
+                      "
+                    >
+                      Storage
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" asp-controller="Inventory" asp-action="List">Inventory</a></li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item"></li>
+                <a style="position: absolute"
+                  class="nav-link text-dark"
+                  asp-area=""
+                  asp-controller="Storage"
+                  asp-action="List"><div class="dropdown">
+                    <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"style="position: relative; border: none;outline: none; padding-top: 9px; color: black; padding-left: 0px;" >
+                      Reception
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" asp-controller="Patient" asp-action="List" >Patient</a></li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item"></li>
+                <a
+                  style="position: absolute"
+                  class="nav-link text-dark"
+                  asp-area=""
+                  asp-controller="Storage"
+                  asp-action="List"
+                  ><div class="dropdown">
+                    <a
+                      class="btn dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      style="
+                        position: relative;
+                        border: none;
+                        outline: none;
+                        padding-top: 9px;
+                        color: black;
+                        padding-left: 0px;
+                      "
+                    >
+                      Doctor
+                    </a>
+
+                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Patient" asp-action="DoctorList" >Patient Procedures</a></li>
+                    </ul>
+                  </div>
+                </a>
+              </li>
+              
+            </ul>
                     <ul style="padding-top:20px;" >
                         <form action='@Url.Action("List")' method="get" id="searchForm">
                             <input type="text" id="keyvalue" name="keyvalue" placeholder="Search by Name" />

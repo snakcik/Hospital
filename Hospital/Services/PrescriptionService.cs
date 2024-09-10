@@ -123,6 +123,7 @@ namespace Hospital.Services
                     PatientName = prescription.Patient.Name + " " + prescription.Patient.LastName,
                     PatientIdentity = prescription.Patient.IdentityNumber.ToString(),
                     CreteDate = prescription.CreatedAt,
+                    Description = prescription.Description,
 
 
 

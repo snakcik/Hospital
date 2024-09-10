@@ -89,7 +89,8 @@ namespace Hospital.Services
 
         public void Remove(string Id)
         {
-            throw new NotImplementedException();
+            var removed = _db.Set<PrescriptionItems>().Find(Id);
+            _db.Set<PrescriptionItems>().Remove(removed);
         }
 
         public IQueryable<PrescriptionItemsDto> Search(Expression<Func<PrescriptionItemsDto, bool>> predicate)

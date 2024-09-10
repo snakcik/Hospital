@@ -1,0 +1,59 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "DoctorList";
+}
+
+<h1>DoctorList</h1>
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+
+}
+
+@model List<PatientDto>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col"> Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Identity Number </th>
+            <th scope="col">Phone</th>
+            <th scope="col">E-Mail</th>
+            <th scope="col">Actions</th>
+            <th scope="col">Prescription Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Id">
+                <td>@item.Name</td>
+                <td>@item.LastName</td>
+                <td>@item.IdentityNumber</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                <td>
+                    <a href="DoctorEdit/@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>&nbsp;
+                </td>
+                <td>
+                    <a asp-controller="Prescription" asp-action="add" asp-route-patientId="@item.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Add Prescription</a>
+                    <a asp-controller="Prescription" asp-action="PrescriptionDetail" asp-route-patientId="@item.Id" class="btn btn-success" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Show Prescription</a>
+
+                </td>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>

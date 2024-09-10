@@ -1,0 +1,43 @@
+﻿@using Hospital.Dtos
+
+@{
+    ViewData["Title"] = "ShowMedicines";
+}
+
+<h1>ShowMedicines</h1>
+
+@model PrescriptionItemsDto
+
+@{
+    List<PrescriptionItemsDto> medicineee = ViewBag.medicines;
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th scope="col"> Name</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (ViewBag.medicines != null)
+        {
+            @foreach (var result in medicineee)
+            {
+                @foreach (var x in result.InventoryNames)
+                {
+
+                    <tr>
+                        <td>@x</td>
+                    </tr>
+
+                }
+            }
+        }
+    </tbody>
+</table>
+
+

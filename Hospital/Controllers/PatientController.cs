@@ -150,5 +150,63 @@ namespace Hospital.Controllers
         
             return View(result);
         }
+
+        public IActionResult DoctorList (string keyvalue)
+        {
+            if (string.IsNullOrEmpty(keyvalue))
+            {
+                List<PatientDto> pList = _patient.GetActive().OrderBy(x => x.Name).ToList();
+                return View(pList);
+            }
+
+            var result = _patient.Search(x =>
+            x.IsDeleted == true &&
+            x.Name.ToLower().Contains(keyvalue.ToLower()) ||
+            x.LastName.ToLower().Contains(keyvalue) ||
+            x.IdentityNumber.ToString().Contains(keyvalue)).ToList();
+
+            return View(result);
+
+        }
+        public IActionResult DoctorEdit(string Id)
+        {
+            var UpdatedPatient = _patient.GetById(Id);
+            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+            ViewBag.Policlinics = _patient.GetActivePoliclinics();
+
+            return View(UpdatedPatient);
+        }
+
+        [HttpPost]
+        public IActionResult DoctorEdit(PatientDto patientDto ,string Id)
+        {
+            bool validation = _patient.Validation(patientDto);
+            if (validation == true)
+            {
+
+
+                bool result = _patient.UpdateBool(patientDto, Id);
+                if (result == true)
+                {
+                    TempData["Message"] = GetMessageEn(ValidationStatus.Update);
+                    return RedirectToAction("DoctorList");
+                }
+                else
+                {
+                    ViewBag.Personell = false;
+                    ViewBag.Message = GetMessageEn(ValidationStatus.Dublicate);
+                }
+
+
+                ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+                ViewBag.Policlinics = _patient.GetActivePoliclinics();
+                return View(patientDto);
+            }
+            ViewBag.Message = GetMessageEn(ValidationStatus.All);
+            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
+            ViewBag.Policlinics = _patient.GetActivePoliclinics();
+            return View(patientDto);
+        }
+
     }
 }

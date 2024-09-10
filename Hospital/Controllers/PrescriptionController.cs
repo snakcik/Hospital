@@ -79,6 +79,23 @@ namespace Hospital.Controllers
             return View();
         }
 
+        public IActionResult PrescriptionReceptionDetail(string patientId)
+        {
+            var prescription = _Prescription.GetPrescriptionList(patientId);
+
+            return View(prescription);
+        }
+
+        public IActionResult ShowMedicines(string prescriptionId)
+        {
+            ViewBag.Inventory = _Items.GetInventory();
+
+            ViewBag.PrescriptionId = prescriptionId;
+
+            ViewBag.medicines = _Items.GetItems(prescriptionId);
+
+            return View();
+        }
 
     }
 }

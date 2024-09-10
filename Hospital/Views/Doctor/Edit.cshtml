@@ -4,10 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-
-<h1>DoctorEdit</h1>
+<h1>Add Diagnosis</h1>
 
 @model PatientDto
 
@@ -42,10 +39,17 @@
                     <input asp-for="LastName" class="form-control" value="@Model.LastName" required disabled />
                 </div>
             </div>
+            <div class="row">
+                <div class="col-6">
             <div class="col-form-label">Identity Number </div>
             <input asp-for="IdentityNumber" class="form-control" value="@Model.IdentityNumber" required disabled />
+                </div>
+                <div class="col-6">
             <div class="col-form-label">Phone</div>
             <input asp-for="Phone" class="form-control" value="@Model.Phone" required disabled />
+                </div>
+            </div>
+           
             <div class="col-form-label">E-Mail </div>
             <input asp-for="Email" class="form-control" value="@Model.Email" required disabled />
             <div class="col-form-label">Illness </div>
@@ -53,9 +57,9 @@
             <div class="col-form-label">Diagnosis </div>
             <input asp-for="Diagnosis" class="form-control" value="@Model.Diagnosis" required />
             <div class="col-form-label">Policilinic</div>
-            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required></select>
+            <select class="form-control" asp-for="Policlinic" asp-items="ViewBag.Policlinics" required disabled></select>
             <div class="col-form-label">Personells</div>
-            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required></select>
+            <select class="form-control" asp-for="Personell" asp-items="ViewBag.Personells" required disabled></select>
             <br />
 
             <button type="submit" value="Save" class="btn btn-primary" />

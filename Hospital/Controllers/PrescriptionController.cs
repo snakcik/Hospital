@@ -38,6 +38,7 @@ namespace Hospital.Controllers
             var Id = patient.Id;
             ViewBag.PatientId = Id;
             ViewBag.PatientName = name;
+            
 
             return View();
         }
@@ -55,11 +56,14 @@ namespace Hospital.Controllers
         {
             var prescription = _Prescription.GetPrescriptionList(patientId);
 
+            
             return View(prescription);
         }
 
         public IActionResult AddMedicines(string prescriptionId)
         {
+           
+            
             ViewBag.Inventory = _Items.GetInventory();
 
             ViewBag.PrescriptionId = prescriptionId;

@@ -20,7 +20,7 @@
             <th scope="col">Create Date </th>
             <th scope="col">Prescription Description</th>
             <th scope="col">Show Medicine <th>
-
+                    
 
         </tr>
     </thead>
@@ -34,7 +34,7 @@
                 <td>@item.CreteDate</td>
                 <td>@item.Description</td>
 
-                <td> <a asp-controller="Prescription" asp-action="ShowMedicines" asp-route-prescriptionId="@item.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Add Medicine</a></td>
+                <td> <a asp-controller="Prescription" asp-action="ShowMedicines" asp-route-prescriptionId="@item.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-prescription-bottle-medical"></i>Show Medicine</a></td>
 
             </tr>
         }

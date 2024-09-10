@@ -151,41 +151,7 @@ namespace Hospital.Controllers
             return View(result);
         }
 
-        public IActionResult DoctorList (string keyvalue)
-        {
-            if (string.IsNullOrEmpty(keyvalue))
-            {
-                List<PatientDto> dList = _patient.GetActive().OrderBy(x => x.Name).ToList();
-                return View(dList);
-            }
-
-            var dResult = _patient.Search(x =>
-            x.IsDeleted == true &&
-            x.Name.ToLower().Contains(keyvalue.ToLower()) ||
-            x.LastName.ToLower().Contains(keyvalue) ||
-            x.IdentityNumber.ToString().Contains(keyvalue)).ToList();
-
-            return View(dResult);
-
-        }
-        public IActionResult DoctorEdit(string Id)
-        {
-            var UpdatedPatient = _patient.GetById(Id);
-            ViewBag.Personells = _patient.GetActiveAndDoctorPersonell();
-            ViewBag.Policlinics = _patient.GetActivePoliclinics();
-
-            return View(UpdatedPatient);
-        }
-
-        [HttpPost]
-        public IActionResult DoctorEdit(PatientDto patientDto ,string Id)
-        {
-              bool result = _patient.DoctorUpdateBool(patientDto, Id);
-              TempData["Message"] = GetMessageEn(ValidationStatus.Update);
-              return RedirectToAction("DoctorList");
-                
-                
-        }
+      
             
             
         

@@ -57,17 +57,13 @@
         {
             @foreach (var result in medicineee)
             {
-                
-                
                 @foreach ( var x in result.InventoryNames)
                 {
-       
                    <tr >
                        <td Id ="">@x</td>
                        <td>
                             <a href="RemoveMedicine/@result.Id" id="@result.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
                    </tr>
-       
                 }
             }
         }

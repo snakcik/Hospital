@@ -73,6 +73,7 @@ namespace Hospital.Services
                   .Where(x => x.PrescriptionId == Id)
                   .Select(x => new PrescriptionItemsDto
                   {
+                      Id = x.Id,
                       PrescriptionId = x.PrescriptionId,
                       InventoryId = x.InventoryId,
                       //InventoryNames =  x.inventories.Where(y=>y.Id == x.InventoryId)
@@ -91,6 +92,7 @@ namespace Hospital.Services
         {
             var removed = _db.Set<PrescriptionItems>().Find(Id);
             _db.Set<PrescriptionItems>().Remove(removed);
+            _db.SaveChanges();
         }
 
         public IQueryable<PrescriptionItemsDto> Search(Expression<Func<PrescriptionItemsDto, bool>> predicate)

@@ -79,6 +79,17 @@ namespace Hospital.Controllers
             return View();
         }
 
+        public IActionResult RemoveMedicine(string Id)
+        {
+            _Items.Remove(Id);
+            string previousUrl = Request.Headers["Referer"].ToString();
+
+            return Redirect(previousUrl);
+            
+
+            
+        }
+
         public IActionResult PrescriptionReceptionDetail(string patientId)
         {
             var prescription = _Prescription.GetPrescriptionList(patientId);

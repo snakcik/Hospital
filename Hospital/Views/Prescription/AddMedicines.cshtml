@@ -56,14 +56,16 @@
         @if(ViewBag.medicines != null)
         {
             @foreach (var result in medicineee)
-            {             
+            {
+                
+                
                 @foreach ( var x in result.InventoryNames)
                 {
        
                    <tr >
-                       <td>@x</td>
+                       <td Id ="">@x</td>
                        <td>
-                       <a href="" onclick="return Delete();" id="" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
+                            <a href="RemoveMedicine/@result.Id" id="@result.Id" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete </a>  &nbsp;
                    </tr>
        
                 }

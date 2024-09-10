@@ -68,7 +68,7 @@ namespace Hospital.Controllers
 
             ViewBag.PrescriptionId = prescriptionId;
             
-          ViewBag.medicines = _Items.GetItems(prescriptionId);
+            ViewBag.medicines = _Items.GetItems(prescriptionId);
 
             return View();
         }
